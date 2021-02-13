@@ -1,0 +1,7 @@
+{
+  "name": "Form_generator",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
