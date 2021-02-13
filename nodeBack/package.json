@@ -1,0 +1,19 @@
+{
+  "name": "nodeback",
+  "version": "1.0.0",
+  "description": "backEnd del form generator",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/I-E-A-I-A-I-O/Moviles_Proyecto1.git"
+  },
+  "author": "El yisus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/I-E-A-I-A-I-O/Moviles_Proyecto1/issues"
+  },
+  "homepage": "https://github.com/I-E-A-I-A-I-O/Moviles_Proyecto1#readme"
+}
