@@ -1,0 +1,98 @@
+const db = require("../helpers/databaseController");
+const mp = require("multiparty");
+const bcrypt = require("bcrypt");
+const fs = require("fs");
+
+const userRegistration = (req, res) => {
+    let form = new mp.Form();
+    form.parse(req, (err, fields, files) => {
+        if (err){
+            res.status(503).send(err);
+        }
+        else{
+            let {username, password, role, email, age, gender} = fields;
+            password = bcrypt.hashSync(password[0], 15);
+            let params = [username[0], password, role[0], email[0], age[0], gender[0]];
+            checkDuplicates(params, files.avatar[0], res);
+        }
+    })
+}
+
+const setAvatar = (params, file, response) => {
+    let type = file.originalFilename.split(".")[1];
+    let filePath = "media/avatars/" + params[0];
+    fs.mkdirSync(filePath);
+    let absolutePath = filePath + "/avatar." + type;
+    fs.readFile(file.path, (err, data) => {
+        if (err) res.status(503).send(err);
+        else{
+            fs.writeFile(absolutePath, data, (writeError) => {
+                if (writeError) console.log(writeError);
+                else{
+                    let text = "INSERT INTO users(username, password, role, email, age, gender, avatar) VALUES($1, $2, $3, $4, $5, $6, $7)"
+                    params.push(absolutePath);
+                    db.query(text, params, (err1, res) => {
+                        if (err1){
+                            let obj = {
+                                content: err1.message
+                            }
+                            response.contentType("application/json");
+                            response.status(200).send(JSON.stringify(obj));
+                        }
+                        else{
+                            let obj = {
+                                content: "user registered"
+                            }
+                            response.contentType("application/json");
+                            response.status(200).send(JSON.stringify(obj));
+                        }
+                    })
+                }
+            })
+            fs.unlink(files.avatar[0].path, (unlinkError) => {
+                if (unlinkError) console.log(unlinkError);
+            });
+        }
+    })
+}
+
+const checkDuplicates = (params, file, response) => {
+    let text = "SELECT username FROM users WHERE username = $1";
+    let queryParams = [params[0]];
+    db.query(text, queryParams, (err1, res) => {
+        if (err1) response.status(400).send(JSON.stringify('{"message":"' + err1.message + '"}'));
+        else{
+            if (res.rowCount > 0){
+                response.status(400).send(JSON.stringify('{"message":"username not available"}'));
+            }
+            else{
+                if (file.size > 0){
+                    setAvatar(params, file, response);
+                }
+                else{
+                    text = "INSERT INTO users(username, password, role, email, age, gender) VALUES($1, $2, $3, $4, $5, $6)"
+                    db.query(text, params, (err2) => {
+                        if (!err2){
+                            let obj = {
+                                content: err2.message
+                            }
+                            response.contentType("application/json");
+                            response.status(503).send(JSON.stringify(obj));
+                        }
+                        else{
+                            let obj = {
+                                content: "user registered"
+                            }
+                            response.contentType("application/json");
+                            response.status(200).send(JSON.stringify(obj));
+                        }
+                    })
+                }
+            }
+        }
+    })
+}
+
+module.exports = {
+    userRegistration
+}
