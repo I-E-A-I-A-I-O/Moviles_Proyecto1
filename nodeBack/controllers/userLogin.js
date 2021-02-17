@@ -2,6 +2,7 @@ const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken");
+const { param } = require("../routers/userAuth");
 
 const checkLogin = (req, res) => {
     let form = new multiparty.Form();
@@ -47,25 +48,58 @@ const checkLogin = (req, res) => {
         })
     })
 }
-
-const connected = (req, res, next) => {
-    const token = req.header('auth-token')
-    if (!token) return res.status(401).json({ error: 'Access denied' })
-    try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET)
-        req.user = verified
-        next()
-    } catch (error) {
-        res.status(400).json({error: 'Invalid token'})
+const connected = (req, res) => {
+    let token = req.session.token;
+    let result = verifyToken(token);
+    var obj = {}
+    if (result.connected){
+        obj.title = "Success";
+        obj.content = "User is connected"
+    }
+    else{
+        obj.title = "Error";
+        obj.content = "Invalid token"
+    }
+    res.contentType("application/json");
+    res.status(200).send(JSON.stringify(obj));
+}
+const verifyToken = (token) => {
+    let obj = {
+        username: "",
+        role: "",
+        connected: false
+    }
+    if (!token || invalidToken(token)){
+        return obj;
+    }
+    else{
+        try {
+            const verified = jwt.verify(token, process.env.TOKEN_SECRET)
+            obj.username = verified.username;
+            obj.role = verified.role;
+            obj.connected = true;
+            return obj;
+        } catch (error) {
+            return obj;
+        }
     }
 }
 const closeSession = (req, res) => {
+    let token = req.session.token;
+    let text = "INSERT INTO invalidtokens(token) VALUES($1)";
+    let params = [token]
+    database.query(text, params);
     req.session.destroy(err => {
         if (err) res.status(500).send(err);
         res.status(200).send("Logged out");
     });
 }
-
+const invalidToken = (token) => {
+    let text = "SELECT token FROM invalidTokens WHERE token = $1";
+    let params = token;
+    let data = await database.queryAsync(text, params);
+    return data.rowCount > 0;
+}
 module.exports = {
     checkLogin, 
     connected, 
