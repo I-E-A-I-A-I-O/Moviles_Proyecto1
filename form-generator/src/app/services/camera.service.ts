@@ -1,9 +1,7 @@
-import { ReadVarExpr } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, 
-  CameraPhoto, CameraSource } from '@capacitor/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
-const { Camera, Filesystem, Storage } = Plugins;
+const { Camera } = Plugins;
 
 @Injectable({
   providedIn: 'root'
