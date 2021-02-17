@@ -9,7 +9,6 @@ const checkLogin = (req, res) => {
         let {username, password} = fields;
         username = username[0];
         password = password[0];
-        let hash = bcrypt.hashSync(password, 15);
         let query = "SELECT password, role FROM users WHERE username = $1";
         let params = [username];
         let obj = {
@@ -29,19 +28,18 @@ const checkLogin = (req, res) => {
                     res.status(403).send(JSON.stringify(obj));
                 }
                 else{
-                    if (success.rows[0].password !== hash){
+                    if (!bcrypt.compareSync(password, success.rows[0].password)){
                         obj.title = "Error";
                         obj.content = "Incorrect password";
                         res.contentType("application/json");
                         res.status(403).send(JSON.stringify(obj));
                     }else{
                         const token = jwt.sign({ name: username, role: success.rows[0].role }, process.env.TOKEN_SECRET);
-                        res.header('auth-token', token).json({error: null,data: { token }})
+                        res.header('auth-token', token);
                         res.contentType("application/json");
                         obj.title = "Success";
                         obj.content = "Login successul";
                         obj.role = success.rows[0].role;
-                        res.contentType("application/json");
                         res.status(200).send(JSON.stringify(obj));
                     }
                 }

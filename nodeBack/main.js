@@ -9,6 +9,7 @@ var corsOptions = {
     origin: "http://localhost:8100",
     methods: "GET, PUT, DELETE, OPTIONS, HEAD",
     credentials: true,
+    headers: "auth-toke, content-type",
     optionsSuccessStatus: 200
 }
 
