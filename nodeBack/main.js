@@ -3,8 +3,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = process.env.port || 8000;
+const authRoutes = require("./routers/userAuth");
 const authRoutes = require("./routers/userAuth")
 const session = require("express-session");
+
 
 var corsOptions = {
     origin: "http://localhost:8100",

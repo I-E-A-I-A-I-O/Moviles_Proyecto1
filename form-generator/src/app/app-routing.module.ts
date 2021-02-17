@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+
   },
   {
     path: 'login',
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: 'admin-home',
     loadChildren: () => import('./admin-page/admin-page.module').then( m => m.AdminPagePageModule)
   },
+
 ];
 
 @NgModule({
