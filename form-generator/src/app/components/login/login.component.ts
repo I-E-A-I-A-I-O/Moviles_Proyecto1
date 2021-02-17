@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
    showLoading(){
-    this.loadingComponent.presentLoading();
+    this.loadingComponent.presentLoading("Loading...");
   }
 
   showAlert(title, message){
