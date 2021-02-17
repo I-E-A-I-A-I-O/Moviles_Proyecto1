@@ -36,7 +36,7 @@ const checkLogin = (req, res) => {
                         res.status(403).send(JSON.stringify(obj));
                     }else{
                         const token = jwt.sign({ name: username, role: success.rows[0].role }, process.env.TOKEN_SECRET);
-                        res.header('auth-token', token);
+                        req.session.token = token;
                         res.contentType("application/json");
                         obj.title = "Success";
                         obj.content = "Login successul";
@@ -48,9 +48,9 @@ const checkLogin = (req, res) => {
         })
     })
 }
-const connected = (req, res) => {
+const connected = async (req, res) => {
     let token = req.session.token;
-    let result = verifyToken(token);
+    let result = await verifyToken(token);
     var obj = {}
     if (result.connected){
         obj.title = "Success";
@@ -63,24 +63,28 @@ const connected = (req, res) => {
     res.contentType("application/json");
     res.status(200).send(JSON.stringify(obj));
 }
-const verifyToken = (token) => {
+const verifyToken = async (token) => {
     let obj = {
         username: "",
         role: "",
         connected: false
     }
-    if (!token || invalidToken(token)){
+    if (!token){
         return obj;
     }
     else{
-        try {
-            const verified = jwt.verify(token, process.env.TOKEN_SECRET)
-            obj.username = verified.username;
-            obj.role = verified.role;
-            obj.connected = true;
-            return obj;
-        } catch (error) {
-            return obj;
+        let bool = await invalidToken(token);
+        if (bool) return obj;
+        else{
+            try {
+                const verified = jwt.verify(token, process.env.TOKEN_SECRET)
+                obj.username = verified.username;
+                obj.role = verified.role;
+                obj.connected = true;
+                return obj;
+            } catch (error) {
+                return obj;
+            }
         }
     }
 }
@@ -88,15 +92,15 @@ const closeSession = (req, res) => {
     let token = req.session.token;
     let text = "INSERT INTO invalidtokens(token) VALUES($1)";
     let params = [token]
-    database.query(text, params);
+    database.query(text, params, (err, res) => {});
     req.session.destroy(err => {
         if (err) res.status(500).send(err);
         res.status(200).send("Logged out");
     });
 }
-const invalidToken = (token) => {
+const invalidToken = async (token) => {
     let text = "SELECT token FROM invalidTokens WHERE token = $1";
-    let params = token;
+    let params = [token];
     let data = await database.queryAsync(text, params);
     return data.rowCount > 0;
 }
