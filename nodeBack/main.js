@@ -3,7 +3,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = process.env.port || 8000;
-const authRoutes = require("./routers/userAuth")
+const authRoutes = require("./routers/userAuth");
+const jwt = require ("jsonwebtoken");
 
 var corsOptions = {
     origin: "http://localhost:8100",
@@ -11,6 +12,7 @@ var corsOptions = {
     credentials: true,
     optionsSuccessStatus: 200
 }
+})
 
 app.use(cors(corsOptions));
 

@@ -1,0 +1,17 @@
+<ion-card>
+  <ion-card-header>
+    </ion-card-header>
+  <ion-card-content>
+    <form [formGroup]="form" (ngSubmit)="registerUser()">
+      <ion-item>
+        <ion-label>Username</ion-label>     
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!form.valid">Login</ion-button>
+    </form>
+  </ion-card-content>
+</ion-card>
