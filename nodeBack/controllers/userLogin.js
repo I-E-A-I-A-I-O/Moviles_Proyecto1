@@ -1,4 +1,4 @@
-const dataBase = require("../helpers/databaseController");
+const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 
@@ -6,16 +6,12 @@ const checkLogin = (req, res) => {
     let form = new multiparty.Form();
     form.parse(req, (err, fields, files) =>{
         let {username, password} = fields;
-        username = JSON.stringify(username);
-        password = JSON.stringify(password);
-        username = username.split('"')[1];
-        username = username.split('"')[0];
-        password = password.split('"')[1];
-        password = password.split('"')[0];
+        username = username[0];
+        password = password[0];
         let hash = bcrypt.hashSync(password, 15);
         let query = "SELECT password FROM users WHERE username = $1";
         let params = [username];
-        dataBase.query(query, params, (error, success) => {
+        database.query(query, params, (error, success) => {
             if (error){
                 res.status(500).send(error);
             }

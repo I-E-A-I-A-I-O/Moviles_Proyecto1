@@ -13,17 +13,18 @@ const userRegistration = (req, res) => {
             let {username, password, role, email, age, gender} = fields;
             password = bcrypt.hashSync(password[0], 15);
             let params = [username[0], password, role[0], email[0], age[0], gender[0]];
-            checkDuplicates(params, files.avatar[0], res);
+            checkDuplicates(params, files, res);
         }
     })
 }
 
 const setAvatar = (params, file, response) => {
-    let type = file.originalFilename.split(".")[1];
+    let type = file.avatar[0].originalFilename.split(".")[1];
+    console.log(file.avatar[0].originalFilename);
     let filePath = "media/avatars/" + params[0];
     fs.mkdirSync(filePath);
     let absolutePath = filePath + "/avatar." + type;
-    fs.readFile(file.path, (err, data) => {
+    fs.readFile(file.avatar[0].path, (err, data) => {
         if (err) res.status(503).send(err);
         else{
             fs.writeFile(absolutePath, data, (writeError) => {
@@ -49,7 +50,7 @@ const setAvatar = (params, file, response) => {
                     })
                 }
             })
-            fs.unlink(files.avatar[0].path, (unlinkError) => {
+            fs.unlink(file.avatar[0].path, (unlinkError) => {
                 if (unlinkError) console.log(unlinkError);
             });
         }
@@ -66,13 +67,13 @@ const checkDuplicates = (params, file, response) => {
                 response.status(400).send(JSON.stringify('{"message":"username not available"}'));
             }
             else{
-                if (file.size > 0){
+                if (file.avatar){
                     setAvatar(params, file, response);
                 }
                 else{
                     text = "INSERT INTO users(username, password, role, email, age, gender) VALUES($1, $2, $3, $4, $5, $6)"
                     db.query(text, params, (err2) => {
-                        if (!err2){
+                        if (err2){
                             let obj = {
                                 content: err2.message
                             }
