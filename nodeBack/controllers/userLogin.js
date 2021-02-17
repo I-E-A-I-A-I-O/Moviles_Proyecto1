@@ -10,23 +10,39 @@ const checkLogin = (req, res) => {
         username = username[0];
         password = password[0];
         let hash = bcrypt.hashSync(password, 15);
-        let query = "SELECT password FROM users WHERE username = $1";
+        let query = "SELECT password, role FROM users WHERE username = $1";
         let params = [username];
+        let obj = {
+            title: "",
+            content: "",
+            role: ""
+        }
         database.query(query, params, (error, success) => {
             if (error){
                 res.status(500).send(error);
             }
             else{
                 if (success.rows.length < 1) {
-                    res.status(403).send("User not found.");
+                    obj.title = "Error";
+                    obj.content = "User not found."
+                    res.contentType("application/json");
+                    res.status(403).send(JSON.stringify(obj));
                 }
                 else{
                     if (success.rows[0].password !== hash){
-                        res.status(403).send("Incorrect password.");
+                        obj.title = "Error";
+                        obj.content = "Incorrect password";
+                        res.contentType("application/json");
+                        res.status(403).send(JSON.stringify(obj));
                     }else{
                         const token = jwt.sign({ name: username, pass: password }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).json({error: null,data: { token }})
-                        res.status(200).send({'message':'ok'});
+                        res.contentType("application/json");
+                        obj.title = "Success";
+                        obj.content = "Login successul";
+                        obj.role = success.rows[0].role;
+                        res.contentType("application/json");
+                        res.status(200).send(JSON.stringify(obj));
                     }
                 }
             }
