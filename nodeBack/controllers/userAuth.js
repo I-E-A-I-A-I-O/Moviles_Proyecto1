@@ -35,14 +35,16 @@ const setAvatar = (params, file, response) => {
                     db.query(text, params, (err1, res) => {
                         if (err1){
                             let obj = {
+                                title: "Error",
                                 content: err1.message
                             }
                             response.contentType("application/json");
-                            response.status(200).send(JSON.stringify(obj));
+                            response.status(500).send(JSON.stringify(obj));
                         }
                         else{
                             let obj = {
-                                content: "user registered"
+                                title: "Success",
+                                content: "Account created"
                             }
                             response.contentType("application/json");
                             response.status(200).send(JSON.stringify(obj));
@@ -64,7 +66,12 @@ const checkDuplicates = (params, file, response) => {
         if (err1) response.status(400).send(JSON.stringify('{"message":"' + err1.message + '"}'));
         else{
             if (res.rowCount > 0){
-                response.status(400).send(JSON.stringify('{"message":"username not available"}'));
+                let obj = {
+                    title: "Error",
+                    content: "Username not available"
+                }
+                response.contentType("application/json");
+                response.status(400).send(JSON.stringify(obj));
             }
             else{
                 if (file.avatar){
@@ -75,6 +82,7 @@ const checkDuplicates = (params, file, response) => {
                     db.query(text, params, (err2) => {
                         if (err2){
                             let obj = {
+                                title: "Error",
                                 content: err2.message
                             }
                             response.contentType("application/json");
@@ -82,7 +90,8 @@ const checkDuplicates = (params, file, response) => {
                         }
                         else{
                             let obj = {
-                                content: "user registered"
+                                title: "Success",
+                                content: "Account created"
                             }
                             response.contentType("application/json");
                             response.status(200).send(JSON.stringify(obj));

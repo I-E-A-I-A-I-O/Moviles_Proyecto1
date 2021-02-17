@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CameraService } from 'src/app/services/camera.service';
 import { ActionSheetController } from '@ionic/angular'
+import { RequestLoadingComponent } from '../request-loading/request-loading.component';
+import { AlertMessageComponent } from '../alert-message/alert-message.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'register-component',
@@ -13,10 +16,13 @@ export class RegisterComponent implements OnInit {
   private form: FormGroup;
   public age: number;
   public fileInput: any = "";
-  public imgSrc = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1"
+  public imgSrc = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
 
   constructor(private formBuilder: FormBuilder, public cameraService: CameraService, 
-    private actionSheetController: ActionSheetController) { 
+    private actionSheetController: ActionSheetController,
+    public loadingComponent: RequestLoadingComponent, 
+    public alertController: AlertMessageComponent,
+    private router: Router) { 
     this.form = formBuilder.group({
       username: ['',[ Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
@@ -31,6 +37,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   registerUser(){
+    this.showLoading();
     let formData = new FormData();
     formData.append("username", this.form.value.username);
     formData.append("password", this.form.value.password);
@@ -50,7 +57,9 @@ export class RegisterComponent implements OnInit {
       credentials:"include"
     }).then(response => response.json())
     .then(json => {
-      console.log(json);
+      this.loadingComponent.loadingController.dismiss("", "", "loadingComponent");
+      this.showAlert(json.title, json.content);
+      location.href= "http://localhost:8100/login";
     });
   }
 
@@ -95,7 +104,7 @@ export class RegisterComponent implements OnInit {
         }
       }, {
         text: 'Browse files',
-        icon: 'search',
+        icon: 'folder',
         handler: () => {
           this.triggetFileInput();
         }
@@ -110,5 +119,13 @@ export class RegisterComponent implements OnInit {
 
   inputSelection(){
     this.presentActionSheet();
+  }
+
+  showLoading(){
+    this.loadingComponent.presentLoading();
+  }
+
+  showAlert(title, message){
+    this.alertController.presentAlert(title, message);
   }
 }
