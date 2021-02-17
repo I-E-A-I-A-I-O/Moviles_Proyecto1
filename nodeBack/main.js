@@ -17,5 +17,5 @@ app.use(cors(corsOptions));
 app.use("/users", authRoutes);
 
 app.listen(port, () => {
-    console.log("Server running at port:" + port);
+    console.log("Server running at port: " + port);
 })

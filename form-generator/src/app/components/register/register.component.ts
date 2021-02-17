@@ -101,7 +101,7 @@ export class RegisterComponent implements OnInit {
         }
       }, {
         text: 'Browse files',
-        icon: 'search',
+        icon: 'folder',
         handler: () => {
           this.triggetFileInput();
         }
