@@ -35,7 +35,7 @@ const checkLogin = (req, res) => {
                         res.contentType("application/json");
                         res.status(403).send(JSON.stringify(obj));
                     }else{
-                        const token = jwt.sign({ name: username, pass: password }, process.env.TOKEN_SECRET);
+                        const token = jwt.sign({ name: username, role: success.rows[0].role }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).json({error: null,data: { token }})
                         res.contentType("application/json");
                         obj.title = "Success";
@@ -52,13 +52,13 @@ const checkLogin = (req, res) => {
 
 const connected = (req, res, next) => {
     const token = req.header('auth-token')
-    if (!token) return res.status(401).json({ error: 'Acceso denegado' })
+    if (!token) return res.status(401).json({ error: 'Access denied' })
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET)
         req.user = verified
-        next() // continuamos
+        next()
     } catch (error) {
-        res.status(400).json({error: 'token no es válido'})
+        res.status(400).json({error: 'Invalid token'})
     }
 }
 const closeSession = (req, res) => {

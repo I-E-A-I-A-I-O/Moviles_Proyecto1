@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'admin-page',
+    path: 'admin-home',
     loadChildren: () => import('./admin-page/admin-page.module').then( m => m.AdminPagePageModule)
   },
 ];
