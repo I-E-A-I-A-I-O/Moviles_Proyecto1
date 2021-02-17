@@ -1,13 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Login</ion-title>
+    <ion-title>Angular form generator</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
-  <login-component></login-component>
+  <ion-card style="position: relative; top: 35%;">
+    <ion-card-header>
+      <ion-card-title>Login to your account!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <login-component></login-component>
+    </ion-card-content>
+    <a href="register">New account?</a>
+  </ion-card>
 </ion-content>
