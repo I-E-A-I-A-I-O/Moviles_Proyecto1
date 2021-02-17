@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit {
   }
 
   showLoading(){
-    this.loadingComponent.presentLoading();
+    this.loadingComponent.presentLoading("Creating account...");
   }
 
   showAlert(title, message){
