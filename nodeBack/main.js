@@ -16,7 +16,7 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions));
-app.use(session({secret:process.env.TOKEN_SECRET, saveUninitialized:false, resave:false}));
+app.use(session({secret:process.env.SESSION_SECRET, saveUninitialized:false, resave:false}));
 
 app.use("/users", authRoutes);
 

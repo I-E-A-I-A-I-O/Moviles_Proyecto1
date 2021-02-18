@@ -2,7 +2,6 @@ const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken");
-const { param } = require("../routers/userAuth");
 
 const checkLogin = (req, res) => {
     let form = new multiparty.Form();
@@ -35,9 +34,9 @@ const checkLogin = (req, res) => {
                         res.contentType("application/json");
                         res.status(403).send(JSON.stringify(obj));
                     }else{
-                        /*const token = jwt.sign({ name: username, role: success.rows[0].role }, process.env.TOKEN_SECRET);
+                        const token = jwt.sign({ name: username, role: success.rows[0].role }, process.env.TOKEN_SECRET);
                         req.session.token = token;
-                        res.contentType("application/json");*/
+                        res.contentType("application/json");
                         obj.title = "Success";
                         obj.content = "Login successul";
                         obj.role = success.rows[0].role;

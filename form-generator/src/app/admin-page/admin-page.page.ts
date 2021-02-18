@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VerifySessionService } from '../services/verify-session.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPagePage implements OnInit {
 
-  constructor() { }
+  constructor(public sessionVerifier: VerifySessionService) { }
 
   ngOnInit() {
+    this.sessionVerifier.verifySessionActive();
   }
 
 }

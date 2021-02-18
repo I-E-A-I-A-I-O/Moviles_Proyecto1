@@ -31,13 +31,6 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Role</ion-label>
-        <ion-select placeholder="Pick an account role" formControlName="role">
-          <ion-select-option value="admin">Admin</ion-select-option>
-          <ion-select-option value="regular">Regular</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
         <ion-label>Avatar</ion-label>
         <input id="imgInput" formControlName="avatar" hidden="true" type="file" (change)="fileInputEvent($event)">
         <ion-button (click)="inputSelection()">Change avatar</ion-button>

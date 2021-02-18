@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { RequestLoadingComponent } from '../request-loading/request-loading.component';
 import { AlertMessageComponent } from '../alert-message/alert-message.component';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-component',

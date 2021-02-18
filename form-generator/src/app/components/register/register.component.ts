@@ -28,7 +28,6 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
       email: ['', [Validators.email, Validators.required]],
       age: [0, [Validators.min(12), Validators.max(120)]],
-      role: ['', Validators.required],
       avatar: [''],
       gender: ['']
     })
@@ -43,7 +42,6 @@ export class RegisterComponent implements OnInit {
     formData.append("password", this.form.value.password);
     formData.append("email", this.form.value.email);
     formData.append("age", this.form.value.age);
-    formData.append("role", this.form.value.role);
     formData.append("gender", this.form.value.gender);
     if (this.fileInput.originalFilename){
       formData.append("avatar", this.fileInput, this.fileInput.originalFilename);
