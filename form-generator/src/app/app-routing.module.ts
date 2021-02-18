@@ -28,7 +28,10 @@ const routes: Routes = [
     path: 'regular-home',
     loadChildren: () => import('./regular-page/regular-page.module').then( m => m.RegularPagePageModule)
   },
-
+  {
+  path: 'page-forms',
+  loadChildren: () => import('./page-forms/page-forms.module').then( m => m.PageFormsPageModule) 
+  }
 ];
 
 @NgModule({
