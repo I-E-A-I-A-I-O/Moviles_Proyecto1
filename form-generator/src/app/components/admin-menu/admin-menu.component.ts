@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';  
+import { LogoutService } from 'src/app/services/logout.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-admin-menu',
@@ -8,7 +10,9 @@ import { MenuController } from '@ionic/angular';
 })
 export class AdminMenuComponent implements OnInit {
 
-  constructor(private menuController: MenuController) { }
+  constructor(private menuController: MenuController, 
+    private logoutService: LogoutService,
+    private router: Router) { }
 
   ngOnInit() {
     this.menuController.swipeGesture(false, 'admin-options');
@@ -17,5 +21,19 @@ export class AdminMenuComponent implements OnInit {
   showMenu(){
     this.menuController.enable(true, 'admin-options');
     this.menuController.open('admin-options');
+  }
+
+  modProfile(){
+    this.closeMenu();
+    this.router.navigate(["/profile/edit"]);
+  }
+
+  logoutClick(){
+    this.closeMenu();
+    this.logoutService.endSession();
+  }
+
+  closeMenu(){
+    this.menuController.close('admin-options');
   }
 }

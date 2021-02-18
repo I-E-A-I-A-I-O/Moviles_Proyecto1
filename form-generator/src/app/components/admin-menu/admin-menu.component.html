@@ -6,12 +6,12 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>
-        <ion-icon name="gear"></ion-icon>
+      <ion-item (click)="modProfile()">
+        <ion-icon slot="start" name="options"></ion-icon>
         Modify profile
       </ion-item>
-      <ion-item>
-        <ion-icon name="power settings new"></ion-icon>
+      <ion-item (click)="logoutClick()">
+        <ion-icon slot="start" name="close"></ion-icon>
         Close session
       </ion-item>
     </ion-list>

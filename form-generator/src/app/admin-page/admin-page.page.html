@@ -5,7 +5,10 @@
         <ion-icon name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>adminPage</ion-title>
+    <ion-title [innerHTML]="username"></ion-title>
+    <ion-avatar slot="end">
+      <img alt="" [src]="avatarSrc">
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 

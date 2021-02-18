@@ -21,4 +21,13 @@ export class VerifySessionService {
       this.router.navigate(["/home"])
     })
   }
+
+  getProfile = async () =>{
+    let response = await fetch("http://localhost:8000/users/user", {
+      method:"GET",
+      credentials:"include"
+    })
+    let json = await response.json();
+    return json;
+  }
 }
