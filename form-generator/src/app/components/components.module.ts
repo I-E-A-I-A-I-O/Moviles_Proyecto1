@@ -6,9 +6,17 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestLoadingComponent } from './request-loading/request-loading.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
+import { AdminMenuComponent } from './admin-menu/admin-menu.component';
+import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
 
 @NgModule({
-  declarations: [RegisterComponent, RequestLoadingComponent, LoginComponent],
+  declarations: [
+    RegisterComponent, 
+    RequestLoadingComponent, 
+    LoginComponent, 
+    AdminMenuComponent,
+    CardPageRedirectComponent
+  ],
   imports: [
     CommonModule,
     IonicModule,
@@ -18,8 +26,10 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
   exports: [
     RegisterComponent,
     RequestLoadingComponent,
-    LoginComponent
+    LoginComponent,
+    AdminMenuComponent,
+    CardPageRedirectComponent
   ],
-  providers:[RequestLoadingComponent, AlertMessageComponent]
+  providers:[RequestLoadingComponent, AlertMessageComponent, AdminMenuComponent]
 })
 export class ComponentsModule { }

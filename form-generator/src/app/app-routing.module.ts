@@ -28,6 +28,14 @@ const routes: Routes = [
     path: 'regular-home',
     loadChildren: () => import('./regular-page/regular-page.module').then( m => m.RegularPagePageModule)
   },
+  {
+    path: 'menu/creation',
+    loadChildren: () => import('./menu-creation/menu-creation.module').then( m => m.MenuCreationPageModule)
+  },
+  {
+    path: 'forms/stats',
+    loadChildren: () => import('./form-stats/form-stats.module').then( m => m.FormStatsPageModule)
+  },
 
 ];
 

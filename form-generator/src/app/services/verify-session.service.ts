@@ -14,7 +14,6 @@ export class VerifySessionService {
       credentials: "include"
     }).then(response => response.json())
     .then(json => {
-      console.log(json);
       if(!json.title.includes("Success")){
         this.router.navigate(["/home"])
       }

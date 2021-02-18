@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminMenuComponent } from '../components/admin-menu/admin-menu.component';
 import { VerifySessionService } from '../services/verify-session.service';
 
 @Component({
@@ -8,10 +9,13 @@ import { VerifySessionService } from '../services/verify-session.service';
 })
 export class AdminPagePage implements OnInit {
 
-  constructor(public sessionVerifier: VerifySessionService) { }
+  constructor(private sessionVerifier: VerifySessionService, private menu: AdminMenuComponent) { }
 
   ngOnInit() {
     this.sessionVerifier.verifySessionActive();
   }
 
+  openMenu(){
+    this.menu.showMenu();
+  }
 }
