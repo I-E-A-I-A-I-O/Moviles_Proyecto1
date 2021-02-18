@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'admin-home',
     loadChildren: () => import('./admin-page/admin-page.module').then( m => m.AdminPagePageModule)
   },
+  {
+    path: 'regular-home',
+    loadChildren: () => import('./regular-page/regular-page.module').then( m => m.RegularPagePageModule)
+  },
 
 ];
 

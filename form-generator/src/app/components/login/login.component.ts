@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { RequestLoadingComponent } from '../request-loading/request-loading.component';
 import { AlertMessageComponent } from '../alert-message/alert-message.component';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-component',
@@ -37,29 +37,36 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    fetch("http://localhost:8000/users", {
+    fetch("http://localhost:8000/users/userLogin", {
       method:"POST",
       body:formData,
       credentials:"include"
     }).then(response => response.json())
     .then(json => {
-      if(json.message == "ok"){
-          this.loadingComponent.loadingController.dismiss("", "", "loadingComponent");
-          this.showAlert(json.title, json.content);
-          location.href= "http://localhost:8100/session";
-      }else{
-        this.showAlert("Rellenar en el login.component", "Rellenar en el login.component");
-        location.href= "http://localhost:8100/login";
+      this.dismissLoading();
+      if(json.title.includes("Error")){
+        this.showAlert("Login error", json.content);
+      }
+      else{
+        if (json.role.includes("admin")){
+          this.router.navigate(["/admin-home"])
+        }
+        else{
+          this.router.navigate(["/regular-home"])
+        }
       }
     }).catch(err => this.showAlert("Catch error",err));
   }
 
    showLoading(){
-    this.loadingComponent.presentLoading();
+    this.loadingComponent.presentLoading("Loading...");
   }
 
   showAlert(title, message){
     this.alertController.presentAlert(title, message);
   }
 
+  dismissLoading(){
+    this.loadingComponent.loadingController.dismiss("", "", "loadingComponent");
+  }
 }

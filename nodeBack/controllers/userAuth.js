@@ -10,9 +10,9 @@ const userRegistration = (req, res) => {
             res.status(503).send(err);
         }
         else{
-            let {username, password, role, email, age, gender} = fields;
+            let {username, password, email, age, gender} = fields;
             password = bcrypt.hashSync(password[0], 15);
-            let params = [username[0], password, role[0], email[0], age[0], gender[0]];
+            let params = [username[0], password, "regular", email[0], age[0], gender[0]];
             checkDuplicates(params, files, res);
         }
     })

@@ -7,14 +7,13 @@ import { LoadingController } from '@ionic/angular'
   styleUrls: ['./request-loading.component.scss'],
 })
 export class RequestLoadingComponent implements OnInit {
-
   constructor(public loadingController: LoadingController) { }
 
   ngOnInit() {}
 
-  async presentLoading(){
+  async presentLoading(loadingMessage){
     const loading = await this.loadingController.create({
-      message:"Creating account...",
+      message:loadingMessage,
       animated: true,
       translucent: true,
       duration:40000,

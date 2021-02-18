@@ -2,7 +2,6 @@ const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken");
-const { param } = require("../routers/userAuth");
 
 const checkLogin = (req, res) => {
     let form = new multiparty.Form();
