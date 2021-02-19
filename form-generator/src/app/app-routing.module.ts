@@ -36,10 +36,6 @@ const routes: Routes = [
     path: 'forms/stats',
     loadChildren: () => import('./form-stats/form-stats.module').then( m => m.FormStatsPageModule)
   },
-  {
-    path: 'profile/edit',
-    loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
-  },
 
 ];
 

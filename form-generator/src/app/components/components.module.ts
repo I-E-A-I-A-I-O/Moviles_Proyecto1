@@ -8,6 +8,7 @@ import { RequestLoadingComponent } from './request-loading/request-loading.compo
 import { AlertMessageComponent } from './alert-message/alert-message.component';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
+import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CardPageRedirectComponent } from './card-page-redirect/card-page-redire
     RequestLoadingComponent, 
     LoginComponent, 
     AdminMenuComponent,
-    CardPageRedirectComponent
+    CardPageRedirectComponent,
+    UserAvatarComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { CardPageRedirectComponent } from './card-page-redirect/card-page-redire
     RequestLoadingComponent,
     LoginComponent,
     AdminMenuComponent,
-    CardPageRedirectComponent
+    CardPageRedirectComponent,
+    UserAvatarComponent
   ],
   providers:[RequestLoadingComponent, AlertMessageComponent, AdminMenuComponent]
 })

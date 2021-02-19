@@ -4,12 +4,21 @@
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-content>
     <ion-list>
-      <ion-item (click)="modProfile()">
-        <ion-icon slot="start" name="options"></ion-icon>
-        Modify profile
+      <ion-item (click)="isRemainder ? isRemainder = false : isRemainder = true">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Sub menu container
       </ion-item>
+      <ion-menu-toggle auto-hide="false">
+        <ion-list [hidden]="isRemainder" style="position: relative; left: 5%;">
+          <ion-item>
+            <ion-icon slot="start" name="close" class="sub-menu"></ion-icon>
+            option 1
+          </ion-item>
+        </ion-list>
+      </ion-menu-toggle>
       <ion-item (click)="logoutClick()">
         <ion-icon slot="start" name="close"></ion-icon>
         Close session

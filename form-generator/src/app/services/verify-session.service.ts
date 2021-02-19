@@ -30,4 +30,13 @@ export class VerifySessionService {
     let json = await response.json();
     return json;
   }
+
+  getAvatar = async () => {
+    let response = await fetch("http://localhost:8000/users/user/avatar", {
+      method:"GET",
+      credentials:"include"
+    })
+    let json = await response.json();
+    return json;
+  }
 }

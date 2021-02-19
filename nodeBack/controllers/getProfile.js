@@ -5,7 +5,23 @@ const fs = require("fs");
 const serveProfile = async (req, res) => {
     let token = req.session.token;
     let result = await tokenVerifier.verifyToken(token);
-    let text = "SELECT username, avatar, age, gender, email FROM users WHERE username = $1";
+    let text = "SELECT username, age, gender, email FROM users WHERE username = $1";
+    let params = [result.username];
+    database.query(text, params, (err, results) => {
+        if (err){
+            res.status(503).json({title:"error", content:err.message})
+        }
+        else{
+            let obj = results.rows[0];
+            res.status(200).send(JSON.stringify(obj));
+        }
+    })
+}
+
+const serveAvatar = async (req, res) => {
+    let token = req.session.token;
+    let result = await tokenVerifier.verifyToken(token);
+    let text = "SELECT avatar FROM users WHERE username = $1";
     let params = [result.username];
     database.query(text, params, (err, results) => {
         if (err){
@@ -35,5 +51,6 @@ const serveProfile = async (req, res) => {
 }
 
 module.exports = {
-    serveProfile
+    serveProfile,
+    serveAvatar
 }

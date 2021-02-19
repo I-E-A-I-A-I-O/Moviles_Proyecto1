@@ -5,6 +5,7 @@ const cors = require("cors");
 const port = process.env.port || 8000;
 const authRoutes = require("./routers/userAuth");
 const getRoutes = require("./routers/getData");
+const editionRoutes = require("./routers/dataEdition");
 const session = require("express-session");
 
 
@@ -21,6 +22,7 @@ app.use(session({secret:process.env.SESSION_SECRET, saveUninitialized:false, res
 
 app.use("/users", authRoutes);
 app.use("/users", getRoutes);
+app.use("/users", editionRoutes);
 
 app.listen(port, () => {
     console.log("Server running at port: " + port);

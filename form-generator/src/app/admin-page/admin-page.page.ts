@@ -18,7 +18,6 @@ export class AdminPagePage implements OnInit {
     this.sessionVerifier.verifySessionActive();
     this.sessionVerifier.getProfile().then(json => {
       this.username = json.username;
-      this.avatarSrc = json.avatar;
     });
   }
 

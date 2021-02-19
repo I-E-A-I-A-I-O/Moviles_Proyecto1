@@ -8,7 +8,7 @@
     <form [formGroup]="form" (ngSubmit)="registerUser()">
       <ion-item>
         <ion-label position="floating">Username</ion-label>     
-        <ion-input type="text" formControlName="username"></ion-input>
+        <ion-input [placeholder]="namePH" type="text" formControlName="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Password</ion-label>
@@ -16,12 +16,12 @@
       </ion-item>
       <ion-item> 
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-input [placeholder]="emailPH" type="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Age</ion-label>
         <ion-range min="12" max="120" formControlName="age" [(ngModel)]="value"></ion-range>
-        <ion-label [innerHTML]="value"></ion-label>
+        <ion-label>{{value}}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Gender</ion-label>

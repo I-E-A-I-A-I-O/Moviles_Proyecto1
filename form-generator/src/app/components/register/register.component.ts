@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CameraService } from 'src/app/services/camera.service';
 import { ActionSheetController } from '@ionic/angular'
 import { RequestLoadingComponent } from '../request-loading/request-loading.component';
 import { AlertMessageComponent } from '../alert-message/alert-message.component';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { VerifySessionService } from 'src/app/services/verify-session.service';
 
 @Component({
   selector: 'register-component',
@@ -14,7 +15,6 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   private form: FormGroup;
-  public age: number;
   public fileInput: any = "";
   public imgSrc = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
 
@@ -22,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     public loadingComponent: RequestLoadingComponent, 
     public alertController: AlertMessageComponent,
-    private router: Router) { 
+    private router: Router,
+    private verifySessionService: VerifySessionService) { 
     this.form = formBuilder.group({
       username: ['',[ Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   registerUser(){
     this.showLoading();
@@ -57,7 +58,6 @@ export class RegisterComponent implements OnInit {
     .then(json => {
       this.loadingComponent.loadingController.dismiss("", "", "loadingComponent");
       this.showAlert(json.title, json.content);
-      location.href= "http://localhost:8100/login";
     });
   }
 
