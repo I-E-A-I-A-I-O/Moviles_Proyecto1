@@ -9,6 +9,10 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
 import { UserAvatarComponent } from './user-avatar/user-avatar.component';
+import { FabComponent } from './fab/fab.component';
+import { PassMenuDataService } from '../services/pass-menu-data.service';
+import { ToastComponent } from './toast/toast.component';
+import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,10 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
     LoginComponent, 
     AdminMenuComponent,
     CardPageRedirectComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    FabComponent,
+    ToastComponent,
+    MenuPreviewComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +38,17 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
     LoginComponent,
     AdminMenuComponent,
     CardPageRedirectComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    FabComponent,
+    ToastComponent,
+    MenuPreviewComponent
   ],
-  providers:[RequestLoadingComponent, AlertMessageComponent, AdminMenuComponent]
+  providers:[
+    RequestLoadingComponent, 
+    AlertMessageComponent, 
+    AdminMenuComponent, 
+    PassMenuDataService,
+    ToastComponent
+  ]
 })
 export class ComponentsModule { }

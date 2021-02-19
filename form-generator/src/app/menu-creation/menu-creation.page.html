@@ -8,5 +8,7 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-text class="text">Current menu preview</ion-text>
+  <app-fab (selection)="fabOptionSelected($event)"></app-fab>
+  <app-menu-preview [left]="0" [menuObject]="menuData"></app-menu-preview>
 </ion-content>
