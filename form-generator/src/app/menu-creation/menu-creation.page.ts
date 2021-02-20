@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
 import { ToastComponent } from '../components/toast/toast.component';
 import { PassMenuDataService } from '../services/pass-menu-data.service';
+import { VariousRequestsService } from '../services/various-requests.service';
 
 @Component({
   selector: 'app-menu-creation',
@@ -13,9 +14,10 @@ export class MenuCreationPage implements OnInit {
 
   private menuData_subscription: Subscription;
   private menuData = [];
+  private menuOptions = [];
 
   constructor(private alert: AlertMessageComponent, private dataService: PassMenuDataService,
-    private toast: ToastComponent) { 
+    private toast: ToastComponent, private requests: VariousRequestsService) { 
     this.menuData_subscription = dataService.execChange.subscribe((menuData) => {
       this.arrange(menuData);
     })
@@ -30,7 +32,11 @@ export class MenuCreationPage implements OnInit {
       case "Sub menu":{
         let obj = {type: menuData.type, name:menuData.name, childs:[]};
         this.placeInTree(this.menuData, menuData, obj);
-        console.log(this.menuData);
+        break;
+      }
+      case "Option":{
+        let obj = { id: menuData.id, name: menuData.name, action: menuData.action };
+        this.placeInTree(this.menuData, menuData, obj);
         break;
       }
       default:{ break; }
@@ -38,6 +44,13 @@ export class MenuCreationPage implements OnInit {
   }
 
   ngOnInit() {
+    this.requests.requestMenuOptions().then(jsonArr => {
+      this.menuOptions = jsonArr;
+    })
+  }
+
+  ngOnDestroy(){
+    this.menuData_subscription.unsubscribe();
   }
 
   placeInTree(tree, element, obj){
@@ -46,7 +59,7 @@ export class MenuCreationPage implements OnInit {
         tree[i].childs.push(obj);
         break;
       }
-      else if (tree[i].childs.length > 0){
+      else if (tree[i].type && tree[i].childs.length > 0){
         this.placeInTree(tree[i].childs, element, obj);
       }
     }
@@ -60,7 +73,7 @@ export class MenuCreationPage implements OnInit {
       }
       case "Create submenu":{
         if (this.menuData.length > 0){
-          this.alert.presentChildMenuCreation(this.menuData);
+          this.alert.presentMenuList(this.menuData, "Sub menu creation");
         }
         else{
           this.toast.presentToast("Can't create sub menus without menus");
@@ -68,6 +81,12 @@ export class MenuCreationPage implements OnInit {
         break;
       }
       case "Add option":{
+        if (this.menuData.length > 0){
+          this.alert.presentMenuList(this.menuData, "Option add", this.menuOptions);
+        }
+        else{
+          this.toast.presentToast("Can't add options without menus");
+        }
         break;
       }
       case "Delete element":{

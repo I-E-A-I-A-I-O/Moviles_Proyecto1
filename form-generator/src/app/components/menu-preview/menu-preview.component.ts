@@ -19,4 +19,8 @@ export class MenuPreviewComponent implements OnInit {
   toggleSub(){
     this.hidden = !this.hidden;
   }
+
+  redirect(value){
+    console.log(value.value);
+  }
 }

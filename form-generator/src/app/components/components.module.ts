@@ -13,6 +13,7 @@ import { FabComponent } from './fab/fab.component';
 import { PassMenuDataService } from '../services/pass-menu-data.service';
 import { ToastComponent } from './toast/toast.component';
 import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [
     RegisterComponent,

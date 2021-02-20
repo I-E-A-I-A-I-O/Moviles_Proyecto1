@@ -1,5 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular'
+import { Subscription } from 'rxjs';
 import { PassMenuDataService } from 'src/app/services/pass-menu-data.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { PassMenuDataService } from 'src/app/services/pass-menu-data.service';
 })
 export class AlertMessageComponent implements OnInit {
 
-  constructor(private alertController: AlertController, private dataService: PassMenuDataService) { }
+  constructor(private alertController: AlertController, private dataService: PassMenuDataService) {}
 
   ngOnInit() {}
 
@@ -58,7 +59,7 @@ export class AlertMessageComponent implements OnInit {
     await alert.present();
   }
 
-  async presentChildMenuCreation(parents){
+  async presentMenuList(parents, redirect, menuOptions = []){
     const alert = await this.alertController.create({
       header: "Select a parent menu",
       inputs: this.createInputs(parents),
@@ -72,7 +73,21 @@ export class AlertMessageComponent implements OnInit {
         {
           text:"Ok",
           handler: (input) => {
-            this.childMenuCreationPart2(input);
+            switch(redirect){
+              case "Sub menu creation":{
+                this.subMenuCreation(input);
+                break;
+              }
+              case "Option add":{
+                this.optionList(input, menuOptions);
+                break;
+              }
+              case "Element delete":{
+
+                break;
+              }
+              default:{ break; }
+            }
           }
         }
       ]
@@ -80,7 +95,7 @@ export class AlertMessageComponent implements OnInit {
     await alert.present();
   }
 
-  async childMenuCreationPart2(parent){
+  async subMenuCreation(parent){
     const alert = await this.alertController.create({
       header:"Set menu name",
       animated:true,
@@ -110,6 +125,40 @@ export class AlertMessageComponent implements OnInit {
     await alert.present();
   }
 
+  async optionList(parent, menuOptions){
+    const alert = await this.alertController.create({
+      animated: true,
+      translucent: true,
+      inputs: this.createOptionInputs(menuOptions),
+      buttons:[
+        {
+          text:"Cancel",
+          role:"cancel"
+        },
+        {
+          text:"Ok",
+          handler: (input) => {
+            let obj = { id: input.option_id, type: "Option", name: input.name, action: input.action, parent: parent };
+            this.emitMenu(obj);
+          }
+        }
+      ]
+    })
+    return alert.present();
+  }
+
+  createOptionInputs(options){
+    let inputs = [];
+    options.forEach(element => {
+      inputs.push({
+        label: element.name,
+        value: element,
+        type: "radio"
+      })
+    })
+    return inputs;
+  }
+
   createInputs(parents){
     let list = this.treeToList(parents);
     let inputs = [];
@@ -126,9 +175,11 @@ export class AlertMessageComponent implements OnInit {
   treeToList(tree){
     let list = [];
     for(let i = 0; i < tree.length; i++){
-      list.push(tree[i]);
-      if (tree[i].childs.length > 0){
-        list = list.concat(this.treeToList(tree[i].childs));
+      if(tree[i].type){
+        list.push(tree[i]);
+        if (tree[i].childs.length > 0){
+          list = list.concat(this.treeToList(tree[i].childs));
+        }
       }
     }
     return list;

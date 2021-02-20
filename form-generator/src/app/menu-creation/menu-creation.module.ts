@@ -9,6 +9,7 @@ import { MenuCreationPageRoutingModule } from './menu-creation-routing.module';
 import { MenuCreationPage } from './menu-creation.page';
 import { ComponentsModule } from '../components/components.module';
 import { PassMenuDataService } from '../services/pass-menu-data.service';
+import { VariousRequestsService } from '../services/various-requests.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { PassMenuDataService } from '../services/pass-menu-data.service';
     ComponentsModule
   ],
   declarations: [MenuCreationPage],
-  providers: [PassMenuDataService]
+  providers: [PassMenuDataService, VariousRequestsService]
 })
 export class MenuCreationPageModule {}

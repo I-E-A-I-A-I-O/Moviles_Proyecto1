@@ -36,6 +36,10 @@ const routes: Routes = [
     path: 'forms/stats',
     loadChildren: () => import('./form-stats/form-stats.module').then( m => m.FormStatsPageModule)
   },
+  {
+    path: 'user/edit/:type',
+    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+  },
 
 ];
 
