@@ -15,10 +15,5 @@ module.exports = {
   async queryAsync(text, params) {
     const res = await pool.query(text, params)
     return res
-  },
-  getClient: (callback) => {
-    pool.connect((err, client, done) => {
-      return callback(err, client, done);
-    })
   }
 }

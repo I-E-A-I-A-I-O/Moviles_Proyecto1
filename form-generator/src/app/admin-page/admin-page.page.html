@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>adminPage</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <app-card-page-redirect></app-card-page-redirect>
 </ion-content>

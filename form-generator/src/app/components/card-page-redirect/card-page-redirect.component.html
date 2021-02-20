@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-item class="card" *ngFor="let props of properties">
+    <ion-card (click)="redirect(props.route)">
+      <ion-card-header>
+        <ion-img class="image" [src]="props.src"></ion-img>
+        <ion-card-title>{{props.title}}</ion-card-title>
+        <ion-card-subtitle>{{props.description}}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-item>
+</ion-list>

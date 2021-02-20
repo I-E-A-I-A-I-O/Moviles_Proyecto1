@@ -7,9 +7,18 @@ import { FormsComponent } from './forms/forms.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestLoadingComponent } from './request-loading/request-loading.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
+import { AdminMenuComponent } from './admin-menu/admin-menu.component';
+import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
 
 @NgModule({
-  declarations: [RegisterComponent, RequestLoadingComponent, LoginComponent, FormsComponent],
+  declarations: [
+    RegisterComponent, 
+    RequestLoadingComponent, 
+    LoginComponent, 
+    AdminMenuComponent,
+    CardPageRedirectComponent,
+    FormsComponent
+  ],
   imports: [
     CommonModule,
     IonicModule,
@@ -20,8 +29,10 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
     RegisterComponent,
     RequestLoadingComponent,
     LoginComponent,
-    FormsComponent
+    FormsComponent,
+    AdminMenuComponent,
+    CardPageRedirectComponent
   ],
-  providers:[RequestLoadingComponent, AlertMessageComponent]
+  providers:[RequestLoadingComponent, AlertMessageComponent, AdminMenuComponent]
 })
 export class ComponentsModule { }
