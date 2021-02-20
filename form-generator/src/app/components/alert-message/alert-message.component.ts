@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular'
-import { Subscription } from 'rxjs';
 import { PassMenuDataService } from 'src/app/services/pass-menu-data.service';
 
 @Component({
