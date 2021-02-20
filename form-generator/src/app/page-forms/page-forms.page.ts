@@ -9,7 +9,5 @@ export class PageFormsPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
