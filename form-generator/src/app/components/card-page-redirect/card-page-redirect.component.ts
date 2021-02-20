@@ -29,7 +29,7 @@ export class CardPageRedirectComponent implements OnInit {
       {
         route:"/forms/stats",
         src:"https://image.flaticon.com/icons/png/512/36/36170.png",
-        title:"Forms",
+        title:"Form stats",
         description:"Preview created forms usage statistics"
       }
     ]

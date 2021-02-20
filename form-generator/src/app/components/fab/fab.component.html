@@ -1,0 +1,12 @@
+<ion-fab vertical="bottom" horizontal="end" slot="sticky">
+  <ion-fab-button>
+    <ion-icon name="settings"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <u *ngFor="let option of options">
+      <ion-fab-button (click)="onSelection(option.action)">
+        <ion-icon name={{option.icon}}></ion-icon>
+      </ion-fab-button>
+    </u>
+  </ion-fab-list>
+</ion-fab>

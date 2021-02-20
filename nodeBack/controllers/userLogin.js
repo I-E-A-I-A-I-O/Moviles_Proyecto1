@@ -2,6 +2,7 @@ const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken");
+const { verifyToken } = require("../helpers/tokenVerifier")
 
 const checkLogin = (req, res) => {
     let form = new multiparty.Form();
@@ -62,31 +63,6 @@ const connected = async (req, res) => {
     res.contentType("application/json");
     res.status(200).send(JSON.stringify(obj));
 }
-const verifyToken = async (token) => {
-    let obj = {
-        username: "",
-        role: "",
-        connected: false
-    }
-    if (!token){
-        return obj;
-    }
-    else{
-        let bool = await invalidToken(token);
-        if (bool) return obj;
-        else{
-            try {
-                const verified = jwt.verify(token, process.env.TOKEN_SECRET)
-                obj.username = verified.username;
-                obj.role = verified.role;
-                obj.connected = true;
-                return obj;
-            } catch (error) {
-                return obj;
-            }
-        }
-    }
-}
 const closeSession = (req, res) => {
     let token = req.session.token;
     let text = "INSERT INTO invalidtokens(token) VALUES($1)";
@@ -96,12 +72,6 @@ const closeSession = (req, res) => {
         if (err) res.status(500).send(err);
         res.status(200).send("Logged out");
     });
-}
-const invalidToken = async (token) => {
-    let text = "SELECT token FROM invalidTokens WHERE token = $1";
-    let params = [token];
-    let data = await database.queryAsync(text, params);
-    return data.rowCount > 0;
 }
 module.exports = {
     checkLogin, 

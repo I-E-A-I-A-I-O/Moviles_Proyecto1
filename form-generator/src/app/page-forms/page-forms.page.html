@@ -1,3 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Creation Forms</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <forms-component></forms-component>
+
+  <ion-text class="text"></ion-text>
+    <ion-card >    
+      <ion-card-content>
+        <div [id]="id"></div>        
+      </ion-card-content>  
+    </ion-card>
+  <app-fab (selection)="optionSelected($event)"></app-fab>
+
 </ion-content>

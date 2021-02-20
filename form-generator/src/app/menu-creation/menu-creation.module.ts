@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { MenuCreationPageRoutingModule } from './menu-creation-routing.module';
 
 import { MenuCreationPage } from './menu-creation.page';
+import { ComponentsModule } from '../components/components.module';
+import { PassMenuDataService } from '../services/pass-menu-data.service';
+import { VariousRequestsService } from '../services/various-requests.service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MenuCreationPageRoutingModule
+    MenuCreationPageRoutingModule,
+    ComponentsModule
   ],
-  declarations: [MenuCreationPage]
+  declarations: [MenuCreationPage],
+  providers: [PassMenuDataService, VariousRequestsService]
 })
 export class MenuCreationPageModule {}

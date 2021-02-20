@@ -9,6 +9,12 @@ import { RequestLoadingComponent } from './request-loading/request-loading.compo
 import { AlertMessageComponent } from './alert-message/alert-message.component';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
+import { UserAvatarComponent } from './user-avatar/user-avatar.component';
+import { FabComponent } from './fab/fab.component';
+import { PassMenuDataService } from '../services/pass-menu-data.service';
+import { ToastComponent } from './toast/toast.component';
+import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,13 +23,18 @@ import { CardPageRedirectComponent } from './card-page-redirect/card-page-redire
     LoginComponent, 
     AdminMenuComponent,
     CardPageRedirectComponent,
-    FormsComponent
+    FormsComponent,
+    UserAvatarComponent,
+    FabComponent,
+    ToastComponent,
+    MenuPreviewComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [
     RegisterComponent,
@@ -31,8 +42,18 @@ import { CardPageRedirectComponent } from './card-page-redirect/card-page-redire
     LoginComponent,
     FormsComponent,
     AdminMenuComponent,
-    CardPageRedirectComponent
+    CardPageRedirectComponent,
+    UserAvatarComponent,
+    FabComponent,
+    ToastComponent,
+    MenuPreviewComponent
   ],
-  providers:[RequestLoadingComponent, AlertMessageComponent, AdminMenuComponent]
+  providers:[
+    RequestLoadingComponent, 
+    AlertMessageComponent, 
+    AdminMenuComponent, 
+    PassMenuDataService,
+    ToastComponent
+  ]
 })
 export class ComponentsModule { }

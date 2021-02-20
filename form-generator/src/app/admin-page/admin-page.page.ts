@@ -9,10 +9,16 @@ import { VerifySessionService } from '../services/verify-session.service';
 })
 export class AdminPagePage implements OnInit {
 
+  private username: string;
+  private avatarSrc: string;
+
   constructor(private sessionVerifier: VerifySessionService, private menu: AdminMenuComponent) { }
 
   ngOnInit() {
     this.sessionVerifier.verifySessionActive();
+    this.sessionVerifier.getProfile().then(json => {
+      this.username = json.username;
+    });
   }
 
   openMenu(){

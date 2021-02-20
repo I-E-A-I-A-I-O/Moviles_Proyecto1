@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>menu-creation</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="admin-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menu creation</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-text class="text">Current menu preview</ion-text>
+  <app-fab (selection)="fabOptionSelected($event)"></app-fab>
+  <app-menu-preview class="menuPreview" [left]="0" [menuObject]="menuData"></app-menu-preview>
 </ion-content>

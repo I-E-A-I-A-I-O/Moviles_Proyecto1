@@ -5,7 +5,8 @@
         <ion-icon name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>adminPage</ion-title>
+    <ion-title [innerHTML]="username"></ion-title>
+    <app-user-avatar slot="end"></app-user-avatar>
   </ion-toolbar>
 </ion-header>
 

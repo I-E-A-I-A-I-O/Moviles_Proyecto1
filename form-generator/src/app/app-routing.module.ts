@@ -29,7 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./regular-page/regular-page.module').then( m => m.RegularPagePageModule)
   },
   {
-    path: 'page-forms',
+    path: 'forms/creation',
     loadChildren: () => import('./page-forms/page-forms.module').then( m => m.PageFormsPageModule) 
   },
   {
@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'forms/stats',
     loadChildren: () => import('./form-stats/form-stats.module').then( m => m.FormStatsPageModule)
+  },
+  {
+    path: 'user/edit/:type',
+    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   }
 ];
 
