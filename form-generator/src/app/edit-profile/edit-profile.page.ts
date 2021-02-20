@@ -11,7 +11,6 @@ export class EditProfilePage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.activatedRoute.snapshot.paramMap);
   }
 
 }

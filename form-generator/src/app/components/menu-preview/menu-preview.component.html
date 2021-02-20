@@ -1,6 +1,6 @@
 <ion-list *ngFor="let options of menuObject">
   <div *ngIf="!options.type; else elseBlock">
-    <ion-item [routerLink]="['/' + options.action]" [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
+    <ion-item [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
   </div>
   <ng-template #elseBlock>
     <ion-item (click)="toggleSub()" [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
