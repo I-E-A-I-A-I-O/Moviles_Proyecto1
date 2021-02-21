@@ -50,6 +50,9 @@ export class MenuCreationPage implements OnInit {
   }
 
   ngOnInit() {
+    this.requests.getMenu().then(menuData => {
+      this.menuData = menuData;
+    })
     this.requests.requestMenuOptions().then(jsonArr => {
       this.menuOptions = jsonArr;
     })

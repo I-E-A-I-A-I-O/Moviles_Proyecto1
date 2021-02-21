@@ -50,4 +50,12 @@ export class VariousRequestsService {
       this.alert.presentAlert(jsonContent.title, jsonContent.content);
     })
   }
+
+  getMenu = async () => {
+    let response = await fetch("http://localhost:8000/menus", {
+      method:"GET",
+      credentials:"include"
+    })
+    return await response.json();
+  }
 }

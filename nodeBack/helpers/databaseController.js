@@ -7,6 +7,10 @@ const pool = new Pool({
     }
 });
 
+pool.on("error", (error, client) => {
+  console.log(error.message);
+})
+
 const getClient = async () => {
   return await pool.connect();
 }
