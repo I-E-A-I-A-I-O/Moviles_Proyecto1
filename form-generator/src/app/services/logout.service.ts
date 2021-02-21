@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store'
 import { Observable, Subscription } from 'rxjs';
 import { SetToken } from '../store/token/token.action';
 import { Token } from '../store/token/token.model';
+import { DeleteUser } from '../store/user/user.action'
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class LogoutService {
     }).then(response => {
       let a: any = "";
       this.store.dispatch(new SetToken(a))
+      this.store.dispatch(new DeleteUser());
     })
     this.router.navigate(["/login"]);
   }

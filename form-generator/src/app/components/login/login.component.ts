@@ -49,6 +49,8 @@ export class LoginComponent implements OnInit {
       }
       else{
         this.store.dispatch(new SetToken(json.token));
+        this.verifySessionService.getProfile(json.token);
+        this.verifySessionService.getAvatar(json.token);
         if (json.role.includes("admin")){
           this.router.navigate(["/admin-home"])
         }

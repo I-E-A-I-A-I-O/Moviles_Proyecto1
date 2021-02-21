@@ -1,6 +1,21 @@
 const jwt = require("jsonwebtoken");
+const database = require("./databaseController")
 
-const verifyToken = (token) => {
+const invalidToken = async (token) => {
+    let client = await database.getClient();
+    let bool = true;
+    try{
+        let text = "SELECT token FROM invalidTokens WHERE token = $1";
+        let params = [token];
+        let results = await client.query(text, params);
+        if (results.rows.length < 1) { bool = false }
+    }finally{
+        await client.release();
+    }
+    return bool;
+}
+
+const verifyToken = async (token) => {
     let obj = {
         username: "",
         role: "",
@@ -10,14 +25,20 @@ const verifyToken = (token) => {
         return obj;
     }
     else{
-        try {
-            const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-            obj.username = verified.name;
-            obj.role = verified.role;
-            obj.connected = true;
+        let invalid = await invalidToken(token);
+        if (invalid ){
             return obj;
-        } catch (error) {
-            return obj;
+        }
+        else{
+            try {
+                const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+                obj.username = verified.name;
+                obj.role = verified.role;
+                obj.connected = true;
+                return obj;
+            } catch (error) {
+                return obj;
+            }
         }
     }
 }

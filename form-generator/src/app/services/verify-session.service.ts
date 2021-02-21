@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngxs/store'
+import { SetAvatar, SetUser } from '../store/user/user.action';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VerifySessionService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private store: Store) { }
 
   verifySessionActive(token){
     fetch("http://localhost:8000/users/connectedUser",{
@@ -34,7 +36,7 @@ export class VerifySessionService {
       }
     })
     let json = await response.json();
-    return json;
+    this.store.dispatch(new SetUser(json.username));
   }
 
   getAvatar = async (token) => {
@@ -46,6 +48,7 @@ export class VerifySessionService {
       }
     })
     let json = await response.json();
-    return json;
+    let avatar = json ? json.avatar : "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
+    this.store.dispatch(new SetAvatar(avatar));
   }
 }

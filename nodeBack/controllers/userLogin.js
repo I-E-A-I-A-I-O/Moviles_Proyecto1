@@ -41,9 +41,9 @@ const loginResponse = async (username, password, res) => {
     }
 }
 
-const connected = (req, res) => {
+const connected = async (req, res) => {
     let token = req.headers.authtoken;
-    let result = verifyToken(token);
+    let result = await verifyToken(token);
     if (result.connected){
         res.status(200).json({title:"Success", content:"User is connected"});
     }
