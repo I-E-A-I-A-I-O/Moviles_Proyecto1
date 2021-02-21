@@ -3,6 +3,9 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { RequestLoadingComponent } from '../request-loading/request-loading.component';
 import { AlertMessageComponent } from '../alert-message/alert-message.component';
 import { Router } from '@angular/router';
+import { VerifySessionService } from 'src/app/services/verify-session.service';
+import { Store } from '@ngxs/store'
+import { SetToken } from 'src/app/store/token/token.action';
 
 @Component({
   selector: 'login-component',
@@ -16,13 +19,15 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     public loadingComponent: RequestLoadingComponent, 
     public alertController: AlertMessageComponent,
-    private router:Router) {
+    private router:Router,
+    public verifySessionService: VerifySessionService,
+    private store: Store) {
 
-      this.from = formBuilder.group({
-        username: ['',[ Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
-        password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]]
-      })
-     }
+    this.from = formBuilder.group({
+      username: ['',[ Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]]
+    })
+  }
 
   ngOnInit() {}
 
@@ -31,11 +36,6 @@ export class LoginComponent implements OnInit {
     let formData = new FormData();
     formData.append("username", this.from.value.username);
     formData.append("password", this.from.value.password);
-
-    if(this.from.value.username == "" && this.from.value.password ==""){
-      this.showAlert("fields is empty","please fill in all fields correctly");
-      return;
-    }
 
     fetch("http://localhost:8000/users/userLogin", {
       method:"POST",
@@ -48,6 +48,9 @@ export class LoginComponent implements OnInit {
         this.showAlert("Login error", json.content);
       }
       else{
+        this.store.dispatch(new SetToken(json.token));
+        this.verifySessionService.getProfile(json.token);
+        this.verifySessionService.getAvatar(json.token);
         if (json.role.includes("admin")){
           this.router.navigate(["/admin-home"])
         }

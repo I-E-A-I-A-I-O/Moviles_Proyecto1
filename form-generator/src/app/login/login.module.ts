@@ -14,6 +14,7 @@ import { ComponentsModule } from '../components/components.module';
     LoginPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
+  providers: []
 })
 export class LoginPageModule {}

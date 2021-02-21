@@ -7,15 +7,10 @@ import { Subject } from 'rxjs'
 export class PassMenuDataService {
 
   execChange: Subject<any> = new Subject<any>();
-  menuOptions: Subject<any> = new Subject<any>();
 
   constructor() {}
 
   setMenuData(data: any) {
     this.execChange.next(data);
-  }
-
-  setMenuOptions(data: any){
-    
   }
 }

@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
+import { NgxsModule } from "@ngxs/store"
+import { TokenState } from "./store/token/token.state"
+import { UserState } from "./store/user/user.state"
+
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
@@ -14,6 +18,7 @@ import { ComponentsModule } from './components/components.module';
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(), 
+    NgxsModule.forRoot([TokenState, UserState]),
     AppRoutingModule, 
     ReactiveFormsModule, 
     FormsModule,

@@ -1,11 +1,18 @@
-const database = require("./databaseController");
 const jwt = require("jsonwebtoken");
+const database = require("./databaseController")
 
 const invalidToken = async (token) => {
-    let text = "SELECT token FROM invalidTokens WHERE token = $1";
-    let params = [token];
-    let data = await database.queryAsync(text, params);
-    return data.rowCount > 0;
+    let client = await database.getClient();
+    let bool = true;
+    try{
+        let text = "SELECT token FROM invalidTokens WHERE token = $1";
+        let params = [token];
+        let results = await client.query(text, params);
+        if (results.rows.length < 1) { bool = false }
+    }finally{
+        await client.release();
+    }
+    return bool;
 }
 
 const verifyToken = async (token) => {
@@ -18,8 +25,10 @@ const verifyToken = async (token) => {
         return obj;
     }
     else{
-        let bool = await invalidToken(token);
-        if (bool) return obj;
+        let invalid = await invalidToken(token);
+        if (invalid ){
+            return obj;
+        }
         else{
             try {
                 const verified = jwt.verify(token, process.env.TOKEN_SECRET);
