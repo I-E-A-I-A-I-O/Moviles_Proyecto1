@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'page-forms',
@@ -11,55 +13,50 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class PageFormsPage implements OnInit {
 
   public form: FormGroup;
-  public id: string = "forms";
+  public id: string = "form";
+  private array = [];
+  private obj:object = {};
 
-  constructor(private alertController: AlertController, private formBuilder: FormBuilder) { }
+  constructor(private alertController: AlertController,private alert: AlertMessageComponent ,private formBuilder: FormBuilder) { }
 
   ngOnInit() {}
 
-  buildForm(type:string, value:string, name:string) {
+  buildForm(type:string,value:string, name:string) {
 
     const xid = document.getElementById(this.id);
 
-    const x = document.createElement("FORM");
-    x.setAttribute("id", this.id);
-    document.body.appendChild(x);
-
-    const parrafo = document.createElement("h3"); 
+    const parrafo = document.createElement("label"); 
     const texto1 = document.createTextNode(name);
     parrafo.appendChild(texto1);
     xid.appendChild(parrafo);
-  
-    const y = document.createElement("INPUT");
+      
+    const y = document.createElement("input");
     y.setAttribute("type", type);
     y.setAttribute("value", value);
+    y.style.width ="90%";
     xid.appendChild(y);
   }
 
-  async presentAlertPrompt() {
-    
+  async insertData() {
+  
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Forms Data',
-      inputs: [
+      inputs:[
         {
-          name: 'name1',
+          name: 'namefield',
           type: 'text',
-          placeholder: 'Tipo de dato'
+          placeholder: 'name of field'
         },
         {
-          name: 'name2',
+          name: 'type',
           type: 'text',
-          id: 'name2-id',
-          value: 'hello',
-          placeholder: 'Valor Del dato'
+          placeholder: 'Type of field '
         },
-        // multiline input.
-        {
-          name: 'name3',
-          id: 'paragraph',
-          type: 'textarea',
-          placeholder: 'titulo del campo'
+         {
+          name: 'contentfield',
+          type: 'text',
+          placeholder: 'field content'
         }
       ],  
       buttons: [
@@ -71,36 +68,71 @@ export class PageFormsPage implements OnInit {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Ok',
-          handler: data => {
-            this.buildForm(data.name1, data.name2, data.name3);
+          text: 'Create',
+          handler: data => {          
+            if(data.ID === "" || data.type === "" || data.namefield === "" || data.contentfield === "") return;
+            
+            this.buildForm(data.type, data.contentfield, data.namefield);
+            let obj = {type: data.type, name: data.namefield, content: data.contentfield};         
+            this.placeInTree(obj);          
+            
           }
         }
       ]
-
     });
     await alert.present();
   }
 
-  optionSelected(event){
-    switch(event){
-      case "Create Forms":{ 
-       this.presentAlertPrompt();
-        break;
-      }
-      case "":{
-        this.presentAlertPrompt();
-        break;
-      }
-      case "Add option":{
-        this.presentAlertPrompt();
-        break;
-      }
-      case "Delete element":{
-        break;
-      }
-      default:{ break; }
-    }
+
+  placeInTree(a){
+    this.array.push(a);
+  }
+
+  createForm(){
+    this.insertData()   
+  }
+
+  async modifyData() {
+  
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Delete Field',
+      inputs:[
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'choose the name of the field to delete'
+        }
+      ],  
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Delete',
+          handler: data => {          
+            if(data.name === "") return;       
+            
+            this.array.forEach( (item) => {
+              if(item.name === data.name)
+                console.log("los datos son iguales");
+                return;
+                 
+                console.log("los datos no son iguales");
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  deleteDataForm(){
+    this.modifyData();
   }
  
 }
