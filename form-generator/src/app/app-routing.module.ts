@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./regular-page/regular-page.module').then( m => m.RegularPagePageModule)
   },
   {
+    path: 'forms/creation',
+    loadChildren: () => import('./page-forms/page-forms.module').then( m => m.PageFormsPageModule) 
+  },
+  {
     path: 'menu/creation',
     loadChildren: () => import('./menu-creation/menu-creation.module').then( m => m.MenuCreationPageModule)
   },
@@ -39,8 +43,7 @@ const routes: Routes = [
   {
     path: 'user/edit/:type',
     loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
-  },
-
+  }
 ];
 
 @NgModule({
