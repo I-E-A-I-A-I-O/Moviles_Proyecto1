@@ -8,6 +8,7 @@ import { AdminPagePageRoutingModule } from './admin-page-routing.module';
 
 import { AdminPagePage } from './admin-page.page';
 import { ComponentsModule } from '../components/components.module';
+import { VerifySessionService } from '../services/verify-session.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ComponentsModule } from '../components/components.module';
     AdminPagePageRoutingModule,
     ComponentsModule
   ],
-  declarations: [AdminPagePage]
+  declarations: [AdminPagePage],
+  providers: [VerifySessionService]
 })
 export class AdminPagePageModule {}

@@ -33,6 +33,11 @@ export class FabComponent implements OnInit {
       name: "Delete",
       icon: "trash",
       action: "Delete element"
+    },
+    {
+      name: "Save",
+      icon: "save",
+      action: "Save menu"
     }
   ]
 

@@ -20,6 +20,6 @@ import { VariousRequestsService } from '../services/various-requests.service';
     ComponentsModule
   ],
   declarations: [MenuCreationPage],
-  providers: [PassMenuDataService, VariousRequestsService]
+  providers: [VariousRequestsService]
 })
 export class MenuCreationPageModule {}

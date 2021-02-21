@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminMenuComponent } from '../components/admin-menu/admin-menu.component';
 import { VerifySessionService } from '../services/verify-session.service';
+import { Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { Token } from '../store/token/token.model';
 
 @Component({
   selector: 'app-admin-page',
@@ -11,14 +14,27 @@ export class AdminPagePage implements OnInit {
 
   private username: string;
   private avatarSrc: string;
+  private tokenOb: Observable<Token>;
+  private tokenSub: Subscription;
+  private token: Token;
 
-  constructor(private sessionVerifier: VerifySessionService, private menu: AdminMenuComponent) { }
+  constructor(public sessionVerifier: VerifySessionService, private menu: AdminMenuComponent,
+    private store: Store) { 
+      this.tokenOb =  this.store.select(state => state.token.token);
+  }
 
   ngOnInit() {
-    this.sessionVerifier.verifySessionActive();
-    this.sessionVerifier.getProfile().then(json => {
+    this.tokenSub = this.tokenOb.subscribe((token) => {
+      this.token = token;
+    })
+    this.sessionVerifier.verifySessionActive(this.token);
+    this.sessionVerifier.getProfile(this.token).then(json => {
       this.username = json.username;
     });
+  }
+
+  ngOnDestroy(){
+    this.tokenSub.unsubscribe();
   }
 
   openMenu(){

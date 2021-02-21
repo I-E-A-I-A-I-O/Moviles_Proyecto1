@@ -3,51 +3,64 @@ const database = require("../helpers/databaseController")
 const fs = require("fs");
 
 const serveProfile = async (req, res) => {
-    let token = req.session.token;
+    let token = req.headers.authtoken;
     let result = await tokenVerifier.verifyToken(token);
-    let text = "SELECT username, age, gender, email FROM users WHERE username = $1";
-    let params = [result.username];
-    database.query(text, params, (err, results) => {
-        if (err){
-            res.status(503).json({title:"error", content:err.message})
+    if (result.connected){
+        let text = "SELECT username, age, gender, email FROM users WHERE username = $1";
+        let params = [result.username];
+        let client = await database.getClient();
+        let results;
+        try{
+            results = await client.query(text, params);
+            res.status(200).json(results.rows[0]);
+        }catch{
+            res.status(500).json({title:"error", content:"Database query error"});
         }
-        else{
-            let obj = results.rows[0];
-            res.status(200).send(JSON.stringify(obj));
+        finally{
+            await client.release();
         }
-    })
+    }
+    else{
+        res.status(403).json({title: "Error", content:"Login first"});
+    }
 }
 
 const serveAvatar = async (req, res) => {
-    let token = req.session.token;
+    let token = req.headers.authtoken;
     let result = await tokenVerifier.verifyToken(token);
-    let text = "SELECT avatar FROM users WHERE username = $1";
-    let params = [result.username];
-    database.query(text, params, (err, results) => {
-        if (err){
-            res.status(503).json({title:"error", content:err.message})
-        }
-        else{
-            let obj = results.rows[0];
-            if (!obj.avatar){
-                res.status(200).send(JSON.stringify(obj));
+    if (result.connected){
+        let text = "SELECT avatar FROM users WHERE username = $1";
+        let params = [result.username];
+        let results;
+        let client = await database.getClient();
+        try{
+            results = await client.query(text, params);
+            if (!results.rows[0].avatar){
+                res.status(200).json(results.rows[0].avatar);
             }
             else{
-                let path = obj.avatar;
+                let path = results.rows[0].avatar;
                 let mime = "image/" + path.split(".")[1]
                 fs.readFile(path, {encoding: "base64"}, (readError, data) => {
                     if (readError){
-                        res.status(503).json({title:"error", content:readError.message});
+                        res.status(500).json({title:"error", content:readError.message});
                     }
                     else{
                         const dataUrl = `data:${mime};base64,${data}`;
-                        obj.avatar = dataUrl;
-                        res.status(200).send(JSON.stringify(obj));
+                        res.status(200).json({title: "Success", content:"Avatar", avatar:dataUrl});
                     }
                 })
             }
+        }catch{
+            res.status(500).json({title: "Error", content:"Database query error"});
         }
-    })
+        finally{
+            await client.release();
+        }
+    }
+    else{
+        res.status(403).json({title: "Error", content:"Login first"});
+    }
 }
 
 module.exports = {

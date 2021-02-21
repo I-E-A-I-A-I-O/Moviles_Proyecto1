@@ -5,10 +5,13 @@ const app = express();
 const cors = require("cors");
 const session = require("express-session");
 
+const db = require("./helpers/databaseController")
+
 const authRoutes = require("./routers/userAuth");
 const getRoutes = require("./routers/getData");
 const editionRoutes = require("./routers/dataEdition");
 const menuRoutes = require("./routers/menuRoutes");
+const { json } = require("express");
 
 const port = process.env.port || 8000;
 
@@ -16,11 +19,12 @@ var corsOptions = {
     origin: "http://localhost:8100",
     methods: "GET, PUT, DELETE, OPTIONS, HEAD",
     credentials: true,
-    headers: "auth-toke, content-type",
+    headers: "authToken, content-type",
     optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
+app.use(json())
 app.use(session({secret:process.env.SESSION_SECRET, saveUninitialized:false, resave:false}));
 
 app.use("/users", authRoutes);

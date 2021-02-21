@@ -7,14 +7,10 @@ const pool = new Pool({
     }
 });
 
+const getClient = async () => {
+  return await pool.connect();
+}
+
 module.exports = {
-  query: (text, params, callback) => {
-    return pool.query(text, params, (err, res) => {
-      callback(err, res);
-    })
-  },
-  async queryAsync(text, params) {
-    const res = await pool.query(text, params);
-    return res
-  }
+  getClient
 }

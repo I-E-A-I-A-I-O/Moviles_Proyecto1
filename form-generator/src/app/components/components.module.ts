@@ -10,11 +10,11 @@ import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { CardPageRedirectComponent } from './card-page-redirect/card-page-redirect.component';
 import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 import { FabComponent } from './fab/fab.component';
-import { PassMenuDataService } from '../services/pass-menu-data.service';
 import { ToastComponent } from './toast/toast.component';
 import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
 import { RouterModule } from '@angular/router';
-
+import { MenuCreationFunctionsService } from '../services/menu-creation-functions.service';
+import { VerifySessionService } from '../services/verify-session.service';
 @NgModule({
   declarations: [
     RegisterComponent, 
@@ -48,9 +48,10 @@ import { RouterModule } from '@angular/router';
   providers:[
     RequestLoadingComponent, 
     AlertMessageComponent, 
-    AdminMenuComponent, 
-    PassMenuDataService,
-    ToastComponent
+    AdminMenuComponent,
+    ToastComponent,
+    MenuCreationFunctionsService,
+    VerifySessionService
   ]
 })
 export class ComponentsModule { }
