@@ -51,7 +51,7 @@ export class MenuCreationPage implements OnInit {
 
   ngOnInit() {
     this.requests.getMenu().then(menuData => {
-      this.menuData = menuData;
+      this.menuData = menuData.content;
     })
     this.requests.requestMenuOptions().then(jsonArr => {
       this.menuOptions = jsonArr;
@@ -88,7 +88,7 @@ export class MenuCreationPage implements OnInit {
 
   fabOptionSelected(event){
     switch(event){
-      case "Create menu":{ 
+      case "Create menu":{
         this.alert.presentMenuCreation(this.menuData);
         break;
       }

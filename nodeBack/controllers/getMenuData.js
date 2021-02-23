@@ -22,7 +22,7 @@ const getMenu = async (req, res) => {
     try{
         let menuArray = await client.query("SELECT * FROM menu");
         if (menuArray.rows.length < 1){
-            res.status(200).json({title:"Success", content:"No menu saved"});
+            res.status(200).json({title:"Success", description:"No menu saved", content:[]});
         }
         else{
             let subMenuArray = await client.query("SELECT * FROM sub_menu INNER JOIN menu ON menu.menu_id = sub_menu.menu_id");
@@ -30,10 +30,10 @@ const getMenu = async (req, res) => {
             let menu = createMenu(menuArray.rows, subMenuArray.rows);
             createSubMenu(subMenuArray.rows, menu);
             createOptions(menuOptionArray.rows, menu);
-            res.status(200).json(menu);
+            res.status(200).json({title:"Success", description:"Menu retrieved", content:menu});
         }
     }catch(e){
-        res.status(500).json({title:"Error", content:e.stack})
+        res.status(500).json({title:"Error", description:e.stack, content:[]})
     }finally{
         await client.release();
     }

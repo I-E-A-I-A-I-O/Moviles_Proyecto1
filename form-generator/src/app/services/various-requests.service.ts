@@ -52,10 +52,12 @@ export class VariousRequestsService {
   }
 
   getMenu = async () => {
+    this.loading.presentLoading("Retrieving menu data...");
     let response = await fetch("http://localhost:8000/menus", {
       method:"GET",
       credentials:"include"
     })
+    this.loading.loadingController.dismiss("loadingComponent");
     return await response.json();
   }
 }

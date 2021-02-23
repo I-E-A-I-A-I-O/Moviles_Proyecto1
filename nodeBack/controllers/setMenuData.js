@@ -41,6 +41,7 @@ const saveMenu = async (req, res) => {
                 }
                 res.status(200).json({title: "Success", content: "Changes saved"});
             }catch(e){
+                console.log(e);
                 res.status(500).json({title:"Error", content:"Error saving changes"});
             }finally{
                 await client.release();
