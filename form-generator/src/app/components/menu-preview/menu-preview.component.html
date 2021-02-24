@@ -3,7 +3,7 @@
     <ion-item [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
   </div>
   <ng-template #elseBlock>
-    <ion-item (click)="toggleSub()" [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
+    <ion-item [ngStyle]="{'position': 'relative', 'left': left + '%'}">{{options.name}}</ion-item>
   </ng-template>
-  <app-menu-preview [hidden]="hidden" [left]="left + 2" [menuObject]="options.childs"></app-menu-preview>
+  <app-menu-preview [left]="left + 2" [menuObject]="options.childs"></app-menu-preview>
 </ion-list>

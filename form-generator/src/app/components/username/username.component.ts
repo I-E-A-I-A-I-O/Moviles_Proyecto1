@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/app/store/user/user.model';
 
 @Component({
   selector: 'app-username',
@@ -7,8 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsernameComponent implements OnInit {
 
-  constructor() { }
+  private username: any;
+  private usernameOb: Observable<User>;
+  private usernameSub: Subscription;
 
-  ngOnInit() {}
+  constructor(private store: Store) {
+    this.usernameOb = this.store.select(state => state.user.user.username);
+  }
+
+  ngOnInit() {
+    this.usernameSub = this.usernameOb.subscribe((username) => {
+      this.username = username;
+    })
+  }
+
+  ngOnDestroy(){
+    this.usernameSub.unsubscribe();
+  }
 
 }

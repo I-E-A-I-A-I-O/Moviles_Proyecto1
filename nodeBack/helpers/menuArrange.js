@@ -6,10 +6,10 @@ const createMenu = (menuArr, subMenuArr) => {
             subMenuArr.forEach(submenu => {
                 if (menu.menu_id == submenu.menu_id){ flag = true }
             })
-            if (!flag) { menus.push({type:"Menu", name:menu.label, childs:[], id:menu.menu_id}); }
+            if (!flag) { menus.push({type:"Menu", name:menu.label, childs:[], id:menu.menu_id, hidden: false}); }
         }
         else{
-            menus.push({type:"Menu", name:menu.label, childs:[], id:menu.menu_id});
+            menus.push({type:"Menu", name:menu.label, childs:[], id:menu.menu_id, hidden:false});
         }
     })
     return menus;
@@ -25,7 +25,7 @@ const placeSubMenuInTree = (subMenuObj, menuTree) => {
     menuTree.forEach(menuNode => {
         if (menuNode.type){
             if (menuNode.id == subMenuObj.parent_menu_id){
-                menuNode.childs.push({id: subMenuObj.menu_id, type:"Sub menu", name:subMenuObj.label, childs:[], parent_id: menuNode.id});
+                menuNode.childs.push({id: subMenuObj.menu_id, type:"Sub menu", name:subMenuObj.label, childs:[], parent_id: menuNode.id, hidden: true});
                 return;
             }
             else if (menuNode.childs.length > 0){
@@ -45,7 +45,7 @@ const placeMenuOptionInTree = (menuOptionObj, menuTree) => {
     menuTree.forEach(menuNode => {
         if (menuNode.type){
             if (menuNode.id == menuOptionObj.parent_menu_id){
-                menuNode.childs.push({id:menuOptionObj.option_id, name:menuOptionObj.name, action:menuOptionObj.action, parent_id:menuOptionObj.parent_menu_id});
+                menuNode.childs.push({id:menuOptionObj.option_id, name:menuOptionObj.name, action:menuOptionObj.action, parent_id:menuOptionObj.parent_menu_id, hidden: true});
                 return;
             }
             else if (menuNode.childs.length > 0){

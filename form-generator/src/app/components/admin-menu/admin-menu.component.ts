@@ -11,8 +11,7 @@ import { Router } from '@angular/router'
 export class AdminMenuComponent implements OnInit {
 
   constructor(private menuController: MenuController, 
-    private logoutService: LogoutService,
-    private router: Router) { }
+    private logoutService: LogoutService) { }
 
   ngOnInit() {
     this.menuController.swipeGesture(false, 'admin-options');
@@ -21,11 +20,6 @@ export class AdminMenuComponent implements OnInit {
   showMenu(){
     this.menuController.enable(true, 'admin-options');
     this.menuController.open('admin-options');
-  }
-
-  modProfile(){
-    this.closeMenu();
-    this.router.navigate(["/profile/edit"]);
   }
 
   logoutClick(){

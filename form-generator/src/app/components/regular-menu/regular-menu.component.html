@@ -1,0 +1,17 @@
+<ion-menu side="start" menuId="regular-options" contentId="regular-options">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        <ion-text>Menu</ion-text>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <app-menu-preview-production [menuObject]="menuData" [left]="0"></app-menu-preview-production>
+    <ion-item (click)="logout()">
+      <ion-icon slot="start" name="close"></ion-icon>
+      Logout
+    </ion-item>
+  </ion-content>
+</ion-menu>

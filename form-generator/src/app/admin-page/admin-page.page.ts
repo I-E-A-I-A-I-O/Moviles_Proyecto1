@@ -13,25 +13,18 @@ import { User } from '../store/user/user.model';
 })
 export class AdminPagePage implements OnInit {
 
-  private username: any;
   private tokenOb: Observable<Token>;
   private tokenSub: Subscription;
   private token: Token;
-  private usernameOb: Observable<User>;
-  private usernameSub: Subscription;
 
   constructor(public sessionVerifier: VerifySessionService, private menu: AdminMenuComponent,
     private store: Store) { 
       this.tokenOb =  this.store.select(state => state.token.token);
-      this.usernameOb = this.store.select(state => state.user.user.username);
   }
 
   ngOnInit() {
     this.tokenSub = this.tokenOb.subscribe((token) => {
       this.token = token;
-    })
-    this.usernameSub = this.usernameOb.subscribe((username) => {
-      this.username = username;
     })
     this.sessionVerifier.verifySessionActive(this.token);
     this.sessionVerifier.getProfile(this.token);
@@ -39,7 +32,6 @@ export class AdminPagePage implements OnInit {
 
   ngOnDestroy(){
     this.tokenSub.unsubscribe();
-    this.usernameSub.unsubscribe();
   }
 
   openMenu(){

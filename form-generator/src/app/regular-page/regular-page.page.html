@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>regular-page</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <app-username></app-username>
+    </ion-title>
+    <ion-avatar slot="end">
+      <app-user-avatar></app-user-avatar>
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <app-user-avatar></app-user-avatar>
+  <div style="position: relative; left: 31%;">
+    <h2>
+      <app-username></app-username>
+    </h2>
+  </div>
 </ion-content>

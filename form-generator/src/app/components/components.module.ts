@@ -16,6 +16,9 @@ import { MenuPreviewComponent } from './menu-preview/menu-preview.component';
 import { RouterModule } from '@angular/router';
 import { MenuCreationFunctionsService } from '../services/menu-creation-functions.service';
 import { VerifySessionService } from '../services/verify-session.service';
+import { UsernameComponent } from './username/username.component';
+import { RegularMenuComponent } from './regular-menu/regular-menu.component';
+import { MenuPreviewProductionComponent } from './menu-preview-production/menu-preview-production.component';
 @NgModule({
   declarations: [
     RegisterComponent, 
@@ -27,7 +30,10 @@ import { VerifySessionService } from '../services/verify-session.service';
     UserAvatarComponent,
     FabComponent,
     ToastComponent,
-    MenuPreviewComponent
+    MenuPreviewComponent,
+    UsernameComponent,
+    RegularMenuComponent,
+    MenuPreviewProductionComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +52,10 @@ import { VerifySessionService } from '../services/verify-session.service';
     UserAvatarComponent,
     FabComponent,
     ToastComponent,
-    MenuPreviewComponent
+    MenuPreviewComponent,
+    UsernameComponent,
+    RegularMenuComponent,
+    MenuPreviewProductionComponent
   ],
   providers:[
     RequestLoadingComponent, 
@@ -54,7 +63,8 @@ import { VerifySessionService } from '../services/verify-session.service';
     AdminMenuComponent,
     ToastComponent,
     MenuCreationFunctionsService,
-    VerifySessionService
+    VerifySessionService,
+    RegularMenuComponent
   ]
 })
 export class ComponentsModule { }

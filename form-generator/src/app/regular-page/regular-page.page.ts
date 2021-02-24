@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegularMenuComponent } from '../components/regular-menu/regular-menu.component';
 
 @Component({
   selector: 'app-regular-page',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegularPagePage implements OnInit {
 
-  constructor() { }
+  constructor(private menu: RegularMenuComponent) { }
 
   ngOnInit() {
   }
 
+  openMenu(){
+    this.menu.openMenu();
+  }
 }
