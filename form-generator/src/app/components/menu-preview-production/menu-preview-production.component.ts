@@ -20,16 +20,16 @@ export class MenuPreviewProductionComponent implements OnInit {
     up.hidden = !up.hidden;
     down.hidden = !down.hidden;
     if (options.childs.length > 0){
-      this.toggleChildren(options.childs);
+      this.toggleChildren(options.childs, !down.hidden);
     }
   }
 
-  toggleChildren(childArr){
+  toggleChildren(childArr, state){
     childArr.forEach(child => {
-      child.hidden = !child.hidden;
+      child.hidden = state;
       if (child.childs){
         if (child.childs.length > 0){
-          this.toggleChildren(child.childs);
+          this.toggleChildren(child.childs, state);
         }
       }
     })
