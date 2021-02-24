@@ -4,7 +4,8 @@ const pool = new Pool({
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
     port: process.env.PGPORT,
-    password: process.env.PGPASSWORD
+    password: process.env.PGPASSWORD,
+    ssl: { rejectUnauthorized: false }
 });
 
 pool.on("error", (error, client) => {
