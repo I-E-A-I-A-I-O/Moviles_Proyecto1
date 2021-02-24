@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 pool.on("error", (error, client) => {
-  console.log(error.message);
+  console.log(error);
 })
 
 const getClient = async () => {

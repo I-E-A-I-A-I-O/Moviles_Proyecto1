@@ -43,4 +43,18 @@ const verifyToken = async (token) => {
     }
 }
 
-module.exports = { verifyToken }
+const invalidateToken = async (token) => {
+    let client = await database.getClient();
+    let text = "INSERT into invalidTokens(token) VALUES($1)";
+    let params = [token];
+    try{
+        await client.query(text, params);
+        return true;
+    }catch{
+        return false;
+    }finally{
+        client.release();
+    }
+}
+
+module.exports = { verifyToken, invalidateToken }

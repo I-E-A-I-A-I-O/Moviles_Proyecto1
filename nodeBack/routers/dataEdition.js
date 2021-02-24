@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { editAccount } = require("../controllers/accountEdit")
+const { editUsername } = require("../controllers/accountEdit")
 
-router.post("/user", editAccount);
+router.post("/user/username", editUsername);
 
 module.exports = router;

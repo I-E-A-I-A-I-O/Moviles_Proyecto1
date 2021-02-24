@@ -2,7 +2,7 @@ const database = require("../helpers/databaseController");
 const multiparty = require("multiparty");
 const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken");
-const { verifyToken } = require("../helpers/tokenVerifier")
+const { verifyToken, invalidateToken } = require("../helpers/tokenVerifier")
 
 const checkLogin = async(req, res) => {
     let form = new multiparty.Form();
@@ -54,16 +54,12 @@ const connected = async (req, res) => {
 
 const closeSession = async(req, res) => {
     let token = req.headers.authtoken;
-    let client = await database.getClient();
-    let text = "INSERT into invalidTokens(token) VALUES($1)";
-    let params = [token];
-    try{
-        await client.query(text, params);
+    let result = invalidateToken(token);
+    if (result){
         res.status(200).json({title: "Success", content:"Session closed"});
-    }catch{
+    }
+    else{
         res.status(500).json({title: "Error", content:"Token invalidation failed"});
-    }finally{
-        client.release();
     }
 }
 module.exports = {
