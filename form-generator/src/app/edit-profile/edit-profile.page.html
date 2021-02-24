@@ -8,5 +8,24 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-list [ngSwitch]="routeParam">
+    <ion-item *ngSwitchCase="'username'">
+      <app-new-username></app-new-username>
+    </ion-item>
+    <ion-item *ngSwitchCase="'email'">
+      <app-new-email></app-new-email>
+    </ion-item>
+    <ion-item *ngSwitchCase="'gender'">
+      <app-new-gender></app-new-gender>
+    </ion-item>
+    <ion-item *ngSwitchCase="'password'">
+      <app-new-password></app-new-password>
+    </ion-item>
+    <ion-item *ngSwitchCase="'age'">
+      <app-new-age></app-new-age>
+    </ion-item>
+    <ion-item *ngSwitchCase="'avatar'">
+      <app-new-avatar></app-new-avatar>
+    </ion-item>
+  </ion-list>
 </ion-content>

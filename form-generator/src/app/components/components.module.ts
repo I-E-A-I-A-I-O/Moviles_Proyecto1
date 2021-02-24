@@ -19,6 +19,12 @@ import { VerifySessionService } from '../services/verify-session.service';
 import { UsernameComponent } from './username/username.component';
 import { RegularMenuComponent } from './regular-menu/regular-menu.component';
 import { MenuPreviewProductionComponent } from './menu-preview-production/menu-preview-production.component';
+import { NewUsernameComponent } from './new-username/new-username.component';
+import { NewEmailComponent } from './new-email/new-email.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { NewGenderComponent } from './new-gender/new-gender.component';
+import { NewAgeComponent } from './new-age/new-age.component';
+import { NewAvatarComponent } from './new-avatar/new-avatar.component';
 @NgModule({
   declarations: [
     RegisterComponent, 
@@ -33,7 +39,13 @@ import { MenuPreviewProductionComponent } from './menu-preview-production/menu-p
     MenuPreviewComponent,
     UsernameComponent,
     RegularMenuComponent,
-    MenuPreviewProductionComponent
+    MenuPreviewProductionComponent,
+    NewUsernameComponent,
+    NewEmailComponent,
+    NewPasswordComponent,
+    NewGenderComponent,
+    NewAgeComponent,
+    NewAvatarComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +67,13 @@ import { MenuPreviewProductionComponent } from './menu-preview-production/menu-p
     MenuPreviewComponent,
     UsernameComponent,
     RegularMenuComponent,
-    MenuPreviewProductionComponent
+    MenuPreviewProductionComponent,
+    NewUsernameComponent,
+    NewEmailComponent,
+    NewPasswordComponent,
+    NewGenderComponent,
+    NewAgeComponent,
+    NewAvatarComponent
   ],
   providers:[
     RequestLoadingComponent, 

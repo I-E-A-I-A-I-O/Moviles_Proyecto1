@@ -62,10 +62,10 @@ export class MenuCreationPage implements OnInit {
     this.menuData_subscription.unsubscribe();
   }
 
-  deleteFromTree(tree, input){
+  deleteFromTree(tree: any[], input: object){
     for (let i = 0; i < tree.length; i++){
       if (tree[i] == input){
-        tree.pop(tree[i]);
+        tree.splice(i, 1);
         break;
       }
       else if (tree[i].type && tree[i].childs.length > 0){

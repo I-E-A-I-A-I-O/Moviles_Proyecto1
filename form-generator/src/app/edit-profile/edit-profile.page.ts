@@ -8,12 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditProfilePage implements OnInit {
 
-  private routeParam;
+  private routeParam: string;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.routeParam = this.activatedRoute.snapshot.paramMap.get("type");
   }
-
 }

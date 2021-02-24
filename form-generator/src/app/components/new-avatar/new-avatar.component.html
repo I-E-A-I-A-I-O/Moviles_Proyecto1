@@ -1,0 +1,16 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Set a new avatar</ion-card-title>
+    <img alt="" [(src)]="imgSrc" (click)="inputSelection()">
+  </ion-card-header>
+  <ion-card-content>
+    <form [formGroup]="form" (ngSubmit)="sendForm()">
+      <ion-item>
+        <ion-label>Avatar</ion-label>
+        <input id="imgInput" formControlName="avatar" hidden="true" type="file" (change)="fileInputEvent($event)">
+        <ion-button (click)="inputSelection()">Change avatar</ion-button>
+      </ion-item>
+      <ion-button type="submit" expand="full" [disabled]="!form.valid">Save changes</ion-button>
+    </form>
+  </ion-card-content>
+</ion-card>
