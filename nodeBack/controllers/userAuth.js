@@ -15,14 +15,14 @@ const userRegistration = (req, res) => {
             let salt = bcrypt.genSaltSync();
             password = bcrypt.hashSync(password[0], salt);
             let params = [username[0], password, "regular", email[0], age[0], gender[0]];
-            checkDuplicates(params, files, res);
+            saveData(params, files, res);
         }
     })
 }
 
-const setAvatar = async (file, params) => {
+const setAvatar = async (file, username) => {
     let type = file.avatar[0].originalFilename.split(".")[1];
-    let filePath = "media/avatars/" + params[0];
+    let filePath = "media/avatars/" + username;
     let absolutePath = filePath + "/avatar." + type;
     try{
         if (fs.existsSync(filePath)){
@@ -37,23 +37,21 @@ const setAvatar = async (file, params) => {
         return {title:"Success", content:absolutePath};
     }catch(e){
         console.log(e);
-        return {title:"Error", content:""};
+        return {title:"Error", content:e.message};
     }
 }
 
-const checkDuplicates = async (params, file, res) => {
+const saveData = async (params, file, res) => {
     let client = await db.getClient();
-    let results;
     let text = "SELECT username FROM users WHERE username = $1";
-    let queryParams = [params[0]];
     try{
-        results = await client.query(text, queryParams);
-        if(results.rowCount > 0){
+        let results = await checkDuplicate(params[0]);
+        if(results){
             res.status(400).json({title: "Error", content:"Username not available"});
         }
         else{
             if (file.avatar){
-                let status = await setAvatar(file, params);
+                let status = await setAvatar(file, params[0]);
                 if (status.title == "Error"){
                     res.status(500).json({title: status, content:"Account couldn't be created"});
                 }
@@ -79,6 +77,23 @@ const checkDuplicates = async (params, file, res) => {
     }
 }
 
+const checkDuplicate = async (username) => {
+    let client = await db.getClient();
+    let text = "SELECT username FROM users WHERE username = $1";
+    let params = [username];
+    try{
+        let results = await client.query(text, params);
+        return results.rowCount > 0;
+    }catch(e){
+        console.log(e);
+        return true;
+    }finally{
+        await client.release();
+    }
+}
+
 module.exports = {
-    userRegistration
+    userRegistration,
+    setAvatar,
+    checkDuplicate
 }

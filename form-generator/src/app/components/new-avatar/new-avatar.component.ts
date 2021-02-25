@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
+import { EditAccountService } from 'src/app/services/edit-account.service';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-new-avatar',
@@ -11,11 +13,12 @@ import { CameraService } from 'src/app/services/camera.service';
 export class NewAvatarComponent implements OnInit {
 
   private form: FormGroup
-  public fileInput: any = "";
+  public fileInput: any = "Empty";
   public imgSrc = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
 
   constructor(private formBuilder: FormBuilder, 
-    private actionSheetController: ActionSheetController, private cameraService: CameraService) {
+    private actionSheetController: ActionSheetController, private cameraService: CameraService,
+    private edit: EditAccountService, private toast: ToastComponent) {
     this.form = formBuilder.group({
       avatar: ['']
     })
@@ -25,6 +28,22 @@ export class NewAvatarComponent implements OnInit {
 
   inputSelection(){
     this.presentActionSheet();
+  }
+
+  async sendForm(){
+    if (this.fileInput == "Empty"){
+      this.toast.presentToast("Select a new avatar first!");
+    }
+    else{
+      let formData = new FormData();
+      if (this.fileInput.originalFilename){
+        formData.append("avatar", this.fileInput, this.fileInput.originalFilename);
+      }
+      else{
+        formData.append("avatar", this.fileInput);
+      }
+      this.edit.sendChanges("avatar", formData);
+    }
   }
 
   fileInputEvent(data){
