@@ -16,22 +16,38 @@ export class MenuPreviewProductionComponent implements OnInit {
 
   toggleSub(options){
     let down = document.getElementById(options.id + 10 + "");
-    let up = document.getElementById(options.id);
+    let up = document.getElementById(options.id + 20 + "");
     up.hidden = !up.hidden;
     down.hidden = !down.hidden;
-    if (options.childs.length > 0){
-      this.toggleChildren(options.childs, !down.hidden);
+    if (up.hidden) {
+      this.hideChildren(options.childs);
+    } else {
+      this.showChildren(options.childs);
     }
   }
 
-  toggleChildren(childArr, state){
-    childArr.forEach(child => {
-      child.hidden = state;
-      if (child.childs){
-        if (child.childs.length > 0){
-          this.toggleChildren(child.childs, state);
-        }
+  showChildren(childs){
+    childs.forEach(element => {
+      element.hidden = false;
+    })
+  }
+
+  hideChildren(childs){
+    childs.forEach(element => {
+      element.hidden = true;
+      if (element.type){
+        this.closeSubMenu(element);
       }
     })
+  }
+
+  closeSubMenu(element){
+    let up = document.getElementById(element.id + 20 + "");
+    let down = document.getElementById(element.id + 10 + "");
+    down.hidden = false;
+    up.hidden = true;
+    if(element.childs.length > 0){
+      this.hideChildren(element.childs);
+    }
   }
 }
