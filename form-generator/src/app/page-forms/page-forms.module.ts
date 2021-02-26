@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule} from '@ionic/angular';
 import { PageFormsPageRoutingModule } from './page-forms-routing.module';
 import { PageFormsPage } from './page-forms.page';
 import { ComponentsModule } from '../components/components.module';
@@ -10,6 +10,7 @@ import { ComponentsModule } from '../components/components.module';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     PageFormsPageRoutingModule,
     ComponentsModule
