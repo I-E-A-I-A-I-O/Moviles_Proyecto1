@@ -15,7 +15,7 @@ const checkLogin = async(req, res) => {
 }
 
 const loginResponse = async (username, password, res) => {
-    let query = "SELECT password, role FROM users WHERE username = $1";
+    let query = "SELECT password, role, user_id FROM users WHERE username = $1";
     let params = [username];
     let results;
     let client = await database.getClient();
@@ -30,7 +30,7 @@ const loginResponse = async (username, password, res) => {
                 res.status(403).json({title: "Error", content: "Incorrect password"});
             }
             else{
-                let token = jwt.sign({ name: username, role: results.rows[0].role }, process.env.TOKEN_SECRET)
+                let token = jwt.sign({ id: results.rows[0].user_id, name: username, role: results.rows[0].role }, process.env.TOKEN_SECRET)
                 res.status(200).json({title:"Success", content:"Login successful", token: token, role: results.rows[0].role});
             }
         }

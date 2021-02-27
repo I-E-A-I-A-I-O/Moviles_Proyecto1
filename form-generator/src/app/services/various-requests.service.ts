@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Token } from '../store/token/token.model';
 import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
 import { RequestLoadingComponent } from '../components/request-loading/request-loading.component';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +71,19 @@ export class VariousRequestsService {
       credentials: "include"
     })
     return await response.json();
+  }
+
+  saveNewForm = async(formData) => {
+    console.log(formData);
+    let response = await fetch("http://localhost:8000/forms", {
+      method: "POST",
+      credentials:"include",
+      body: JSON.stringify(formData),
+      headers:{
+        "authToken": this.token,
+        "Content-Type": "application/json"
+      }
+    })
+    console.log(response);
   }
 }

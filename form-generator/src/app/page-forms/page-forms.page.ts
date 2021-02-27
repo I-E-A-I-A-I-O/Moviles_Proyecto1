@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VariousRequestsService } from '../services/various-requests.service';
 import { PopoverComponent } from '../components/popover/popover.component';
+import { ToastComponent } from '../components/toast/toast.component';
 
 @Component({
   selector: 'page-forms',
@@ -12,23 +13,22 @@ export class PageFormsPage implements OnInit {
 
   private form = { title: "Form title", fields: [] }
 
-  constructor(private requests: VariousRequestsService, private popoverComponent: PopoverComponent) { }
+  constructor(private requests: VariousRequestsService, private popoverComponent: PopoverComponent,
+    private toast: ToastComponent) { }
 
   ngOnInit() {
-    this.requests.getFieldOptions().then(options => {
-      console.log(options);
-    })
+
   }
 
   addField(){
-    this.form.fields.push({id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`});
+    this.form.fields.push({id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`, options: []});
   }
 
   async presentPopover(index){
     let selection = await this.popoverComponent.presentPopOver();
     switch(selection){
       case "Text":{
-        this.form.fields[index] = {id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`};
+        this.form.fields[index] = {id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`, options: []};
         break;
       }
       case "Single":{
@@ -59,5 +59,14 @@ export class PageFormsPage implements OnInit {
 
   deleteOption(indexI, indexN){
     this.form.fields[indexI].options.splice(indexN, 1);
+  }
+
+  saveForm(){
+    if(this.form.fields.length > 0){
+      this.requests.saveNewForm(this.form);
+    }
+    else{
+      this.toast.presentToast("Add at least one question!");
+    }
   }
 }
