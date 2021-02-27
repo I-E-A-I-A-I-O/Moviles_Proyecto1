@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
-import { isNgTemplate } from '@angular/compiler';
+import { VariousRequestsService } from '../services/various-requests.service';
+import { PopoverComponent } from '../components/popover/popover.component';
 
 @Component({
   selector: 'page-forms',
@@ -12,127 +10,54 @@ import { isNgTemplate } from '@angular/compiler';
 
 export class PageFormsPage implements OnInit {
 
-  public form: FormGroup;
-  public id: string = "form";
-  private array = [];
-  private obj:object = {};
+  private form = { title: "Form title", fields: [] }
 
-  constructor(private alertController: AlertController,private alert: AlertMessageComponent ,private formBuilder: FormBuilder) { }
+  constructor(private requests: VariousRequestsService, private popoverComponent: PopoverComponent) { }
 
-  ngOnInit() {}
-
-  buildForm(type:string,value:string, name:string) {
-
-    const xid = document.getElementById(this.id);
-
-    const parrafo = document.createElement("label"); 
-    const texto1 = document.createTextNode(name);
-    parrafo.appendChild(texto1);
-    xid.appendChild(parrafo);
-      
-    const y = document.createElement("input");
-    y.setAttribute("type", type);
-    y.setAttribute("value", value);
-    y.style.width ="90%";
-    xid.appendChild(y);
+  ngOnInit() {
+    this.requests.getFieldOptions().then(options => {
+      console.log(options);
+    })
   }
 
-  async insertData() {
-  
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Forms Data',
-      inputs:[
-        {
-          name: 'namefield',
-          type: 'text',
-          placeholder: 'name of field'
-        },
-        {
-          name: 'type',
-          type: 'text',
-          placeholder: 'Type of field '
-        },
-         {
-          name: 'contentfield',
-          type: 'text',
-          placeholder: 'field content'
-        }
-      ],  
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Create',
-          handler: data => {          
-            if(data.ID === "" || data.type === "" || data.namefield === "" || data.contentfield === "") return;
-            
-            this.buildForm(data.type, data.contentfield, data.namefield);
-            let obj = {type: data.type, name: data.namefield, content: data.contentfield};         
-            this.placeInTree(obj);          
-            
-          }
-        }
-      ]
-    });
-    await alert.present();
+  addField(){
+    this.form.fields.push({id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`});
   }
 
-
-  placeInTree(a){
-    this.array.push(a);
+  async presentPopover(index){
+    let selection = await this.popoverComponent.presentPopOver();
+    switch(selection){
+      case "Text":{
+        this.form.fields[index] = {id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`};
+        break;
+      }
+      case "Single":{
+        this.form.fields[index] = { id: 2, data_type: "radio", 
+        label: `Question #${index + 1}`, options: [{label: "Option #1"}, {label: "Option #2"}]};
+        break;
+      }
+      case "Multiple":{
+        this.form.fields[index] = { id: 3, data_type: "checkbox", 
+        label: `Question #${index + 1}`, options: [{label: "Option #1"}, {label: "Option #2"}]};
+        break;
+      }
+      case "Delete":{
+        this.form.fields.splice(index, 1);
+        break;
+      }
+      default:{
+        console.log("no selection");
+        break;
+      }
+    }
   }
 
-  createForm(){
-    this.insertData()   
+  addOption(index){
+    let length = this.form.fields[index].options.length;
+    this.form.fields[index].options.push({label: `Option #${length + 1}`});
   }
 
-  async modifyData() {
-  
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Delete Field',
-      inputs:[
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'choose the name of the field to delete'
-        }
-      ],  
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Delete',
-          handler: data => {          
-            if(data.name === "") return;       
-            
-            this.array.forEach( (item) => {
-              if(item.name === data.name)
-                console.log("los datos son iguales");
-                return;
-                 
-                console.log("los datos no son iguales");
-            });
-          }
-        }
-      ]
-    });
-    await alert.present();
+  deleteOption(indexI, indexN){
+    this.form.fields[indexI].options.splice(indexN, 1);
   }
-
-  deleteDataForm(){
-    this.modifyData();
-  }
- 
 }

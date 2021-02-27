@@ -25,6 +25,8 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { NewGenderComponent } from './new-gender/new-gender.component';
 import { NewAgeComponent } from './new-age/new-age.component';
 import { NewAvatarComponent } from './new-avatar/new-avatar.component';
+import { PopoverComponent } from './popover/popover.component';
+import { PopoverComponentComponent } from './popover-component/popover-component.component';
 @NgModule({
   declarations: [
     RegisterComponent, 
@@ -45,7 +47,9 @@ import { NewAvatarComponent } from './new-avatar/new-avatar.component';
     NewPasswordComponent,
     NewGenderComponent,
     NewAgeComponent,
-    NewAvatarComponent
+    NewAvatarComponent,
+    PopoverComponent,
+    PopoverComponentComponent
   ],
   imports: [
     CommonModule,
@@ -73,7 +77,9 @@ import { NewAvatarComponent } from './new-avatar/new-avatar.component';
     NewPasswordComponent,
     NewGenderComponent,
     NewAgeComponent,
-    NewAvatarComponent
+    NewAvatarComponent,
+    PopoverComponent,
+    PopoverComponentComponent
   ],
   providers:[
     RequestLoadingComponent, 
@@ -82,7 +88,8 @@ import { NewAvatarComponent } from './new-avatar/new-avatar.component';
     ToastComponent,
     MenuCreationFunctionsService,
     VerifySessionService,
-    RegularMenuComponent
+    RegularMenuComponent,
+    PopoverComponent
   ]
 })
 export class ComponentsModule { }
