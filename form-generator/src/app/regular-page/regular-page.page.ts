@@ -13,6 +13,10 @@ export class RegularPagePage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter(){
+    this.menu.requestMenu();
+  }
+
   openMenu(){
     this.menu.openMenu();
   }

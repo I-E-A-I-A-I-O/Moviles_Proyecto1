@@ -12,6 +12,7 @@ const getRoutes = require("./routers/getData");
 const editionRoutes = require("./routers/dataEdition");
 const menuRoutes = require("./routers/menuRoutes");
 const formRoutes = require("./routers/formRoutes");
+const statsRoutes = require("./routers/statsRoutes");
 
 const { json } = require("express");
 
@@ -34,6 +35,7 @@ app.use("/users", getRoutes);
 app.use("/users", editionRoutes);
 app.use("/menus", menuRoutes);
 app.use("/forms", formRoutes);
+app.use("/stats", statsRoutes);
 
 app.listen(port, () => {
     console.log("Server running at port: " + port);

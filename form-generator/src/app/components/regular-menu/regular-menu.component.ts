@@ -12,14 +12,17 @@ export class RegularMenuComponent implements OnInit {
 
   private menuData = [];
 
-  constructor(private menuController: MenuController, private logoutService: LogoutService, 
+  constructor(private menuController: MenuController, private logoutService: LogoutService,
     private menuRequests: VariousRequestsService) { }
 
   ngOnInit() {
     this.menuController.swipeGesture(false, "regular-options");
+    this.requestMenu();
+  }
+
+  requestMenu(){
     this.menuRequests.getMenu(false).then(menuData => {
       this.menuData = menuData.content;
-      console.log(this.menuData);
     })
   }
 
