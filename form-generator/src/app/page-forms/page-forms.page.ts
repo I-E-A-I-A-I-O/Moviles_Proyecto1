@@ -32,12 +32,12 @@ export class PageFormsPage implements OnInit {
         break;
       }
       case "Single":{
-        this.form.fields[index] = { id: 2, data_type: "radio", 
+        this.form.fields[index] = { id: 2, data_type: "radio",
         label: `Question #${index + 1}`, options: [{label: "Option #1"}, {label: "Option #2"}]};
         break;
       }
       case "Multiple":{
-        this.form.fields[index] = { id: 3, data_type: "checkbox", 
+        this.form.fields[index] = { id: 3, data_type: "checkbox",
         label: `Question #${index + 1}`, options: [{label: "Option #1"}, {label: "Option #2"}]};
         break;
       }
@@ -61,9 +61,9 @@ export class PageFormsPage implements OnInit {
     this.form.fields[indexI].options.splice(indexN, 1);
   }
 
-  saveForm(){
+  async saveForm(){
     if(this.form.fields.length > 0){
-      this.requests.saveNewForm(this.form);
+      this.requests.saveNewForm(this.form);  
     }
     else{
       this.toast.presentToast("Add at least one question!");

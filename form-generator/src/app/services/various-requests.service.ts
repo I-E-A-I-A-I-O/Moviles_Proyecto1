@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Token } from '../store/token/token.model';
 import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
 import { RequestLoadingComponent } from '../components/request-loading/request-loading.component';
-import { async } from '@angular/core/testing';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,8 @@ export class VariousRequestsService {
   private token: any;
 
   constructor(private menuFunctions: MenuCreationFunctionsService, private store: Store,
-    private loading: RequestLoadingComponent, private alert: AlertMessageComponent) {
+    private loading: RequestLoadingComponent, private alert: AlertMessageComponent,
+    private router: Router) {
     this.tokenOb = this.store.select(state => state.token.token);
     this.tokenSub = this.tokenOb.subscribe((token) => {
       this.token = token;
@@ -74,7 +75,7 @@ export class VariousRequestsService {
   }
 
   saveNewForm = async(formData) => {
-    console.log(formData);
+    this.loading.presentLoading("Saving form...");
     let response = await fetch("http://localhost:8000/forms", {
       method: "POST",
       credentials:"include",
@@ -84,6 +85,9 @@ export class VariousRequestsService {
         "Content-Type": "application/json"
       }
     })
-    console.log(response);
+    let json = await response.json();
+    await this.loading.loadingController.dismiss("", "", "loadingComponent");
+    await this.alert.presentAlert(json.title, json.content);
+    if (json.title == "Success"){ this.router.navigate(["/admin-home"]); }
   }
 }
