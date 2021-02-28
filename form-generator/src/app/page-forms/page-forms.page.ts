@@ -24,7 +24,7 @@ export class PageFormsPage implements OnInit {
     this.form.fields.push({id: 1, data_type: "string", label: `Question #${this.form.fields.length + 1}`, options: []});
   }
 
-  async presentPopover(index){
+  async presentPopover(index: number){
     let selection = await this.popoverComponent.presentPopOver();
     switch(selection){
       case "Text":{
@@ -52,18 +52,18 @@ export class PageFormsPage implements OnInit {
     }
   }
 
-  addOption(index){
+  addOption(index: number){
     let length = this.form.fields[index].options.length;
     this.form.fields[index].options.push({label: `Option #${length + 1}`});
   }
 
-  deleteOption(indexI, indexN){
+  deleteOption(indexI: number, indexN: number){
     this.form.fields[indexI].options.splice(indexN, 1);
   }
 
   async saveForm(){
     if(this.form.fields.length > 0){
-      this.requests.saveNewForm(this.form);  
+      this.requests.saveNewForm(this.form);
     }
     else{
       this.toast.presentToast("Add at least one question!");

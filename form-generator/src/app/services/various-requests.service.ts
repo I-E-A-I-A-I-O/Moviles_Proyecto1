@@ -34,7 +34,7 @@ export class VariousRequestsService {
     return json;
   }
 
-  saveMenu = async (menuData) => {
+  saveMenu = async (menuData: object[]) => {
     this.loading.presentLoading("Saving changes...");
     let list = this.menuFunctions.treeToListAll(menuData);
     let response = await fetch("http://localhost:8000/menus", {
@@ -74,7 +74,7 @@ export class VariousRequestsService {
     return await response.json();
   }
 
-  saveNewForm = async(formData) => {
+  saveNewForm = async(formData: object) => {
     this.loading.presentLoading("Saving form...");
     let response = await fetch("http://localhost:8000/forms", {
       method: "POST",
