@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'user/edit/:type',
     loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+  },
+  {
+    path: 'forms/form/:id',
+    loadChildren: () => import('./form-page/form-page.module').then( m => m.FormPagePageModule)
   }
 ];
 

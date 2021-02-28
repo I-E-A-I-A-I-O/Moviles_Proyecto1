@@ -19,6 +19,7 @@ const verifyToken = async (token) => {
     let obj = {
         username: "",
         role: "",
+        id: -1, 
         connected: false
     }
     if (!token){
@@ -34,6 +35,7 @@ const verifyToken = async (token) => {
                 const verified = jwt.verify(token, process.env.TOKEN_SECRET);
                 obj.username = verified.name;
                 obj.role = verified.role;
+                obj.id = verified.id;
                 obj.connected = true;
                 return obj;
             } catch (error) {

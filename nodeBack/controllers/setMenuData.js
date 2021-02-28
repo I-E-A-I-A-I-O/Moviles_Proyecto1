@@ -118,5 +118,6 @@ const generateMenuParams = (objectArray, type) => {
 }
 
 module.exports= {
-    saveMenu
+    saveMenu,
+    generateValues
 }

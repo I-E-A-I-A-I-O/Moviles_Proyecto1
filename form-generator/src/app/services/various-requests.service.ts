@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Token } from '../store/token/token.model';
 import { AlertMessageComponent } from '../components/alert-message/alert-message.component';
 import { RequestLoadingComponent } from '../components/request-loading/request-loading.component';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class VariousRequestsService {
 
   constructor(private menuFunctions: MenuCreationFunctionsService, private store: Store,
     private loading: RequestLoadingComponent, private alert: AlertMessageComponent) { 
+    private loading: RequestLoadingComponent, private alert: AlertMessageComponent,
+    private router: Router) {
     this.tokenOb = this.store.select(state => state.token.token);
     this.tokenSub = this.tokenOb.subscribe((token) => {
       this.token = token;
@@ -32,7 +35,7 @@ export class VariousRequestsService {
     return json;
   }
 
-  saveMenu = async (menuData) => {
+  saveMenu = async (menuData: object[]) => {
     this.loading.presentLoading("Saving changes...");
     let list = this.menuFunctions.treeToListAll(menuData);
     let response = await fetch("http://localhost:8000/menus", {
@@ -63,4 +66,30 @@ export class VariousRequestsService {
     })
     return await json;
   }
+
+  getFieldOptions = async() => {
+    let response = await fetch("http://localhost:8000/forms/options", {
+      method: "GET",
+      credentials: "include"
+    })
+    return await response.json();
+  }
+
+  saveNewForm = async(formData: object) => {
+    this.loading.presentLoading("Saving form...");
+    let response = await fetch("http://localhost:8000/forms", {
+      method: "POST",
+      credentials:"include",
+      body: JSON.stringify(formData),
+      headers:{
+        "authToken": this.token,
+        "Content-Type": "application/json"
+      }
+    })
+    let json = await response.json();
+    await this.loading.loadingController.dismiss("", "", "loadingComponent");
+    await this.alert.presentAlert(json.title, json.content);
+    if (json.title == "Success"){ this.router.navigate(["/admin-home"]); }
+  }
+
 }
