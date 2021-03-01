@@ -1,48 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Form Builder</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-<<<<<<< HEAD
-  <form [formGroup]="form" (ngSubmit)="manage(form.value)">
-
-      <ion-list >
-          <ion-item >
-             <ion-label floating>Title Of Form:</ion-label>
-             <ion-input type="text" maxlength="40" formControlName="name"></ion-input>
-          </ion-item>
-
-	        <div formArrayName="technologies" >
-             <ion-section [formGroupName]="i" *ngFor="let tech of form.controls.technologies.controls; let i = index">
-               <ion-card>
-                  <ion-item-group>                  
-                  	<ion-item-divider color="light">Field {{ i + 1 }}</ion-item-divider>
-                     <ion-item>
-                        <ion-label floating></ion-label>   
-                        <ion-input type="text" maxlength="50" formControlName="name"></ion-input>
-                     </ion-item>  
-
-                     <span *ngIf="form.controls.technologies.length > 1" (click)="removeInputField(i)">
-                        <ion-icon name="close"></ion-icon>
-                        Remove
-                     </span>  
-                  </ion-item-group>  
-               </ion-card>  
-             </ion-section>
-          </div>
-
-          <ion-button style="position: relative; left: 1.65%; width: 40%;" (click)="addNewInputField()" expand="full"><ion-icon name="add"></ion-icon>ADD NEW FIELD</ion-button>
-  	  
-         </ion-list>
-
-          <ion-button color="primary" expand="full" [disabled]="!form.valid">SUBMIT</ion-button>
-
-  </form>
-</ion-content>
-=======
-
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="admin-home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Form generator</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ion-card>
 
     <ion-card-header>
@@ -65,7 +29,7 @@
 
               <ion-card-content>
                 <ion-textarea placeHolder="User answer here" type="text"></ion-textarea>
-              </ion-card-content>    
+              </ion-card-content>
           </ion-card>
 
           <ion-card *ngSwitchCase="'checkbox'">
@@ -123,4 +87,3 @@
   </ion-card>
   <ion-button (click)="saveForm()" color="success" expand="full">Save form</ion-button>
 </ion-content>
->>>>>>> da8dffa50c0a559d217fde4b69d961618ef189e6
