@@ -1,4 +1,4 @@
-const express = reqire("express");
+const express = require("express");
 const router = express.Router();
 
 const { getStats } = require("../controllers/getFormStats");

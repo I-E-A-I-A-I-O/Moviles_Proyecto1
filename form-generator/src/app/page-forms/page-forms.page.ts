@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { NavController, NavParams} from '@ionic/angular';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-=======
 import { VariousRequestsService } from '../services/various-requests.service';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { ToastComponent } from '../components/toast/toast.component';
->>>>>>> da8dffa50c0a559d217fde4b69d961618ef189e6
 
 @Component({
   selector: 'page-forms',
@@ -16,48 +13,18 @@ import { ToastComponent } from '../components/toast/toast.component';
 
 export class PageFormsPage implements OnInit {
 
-  public form: FormGroup;
+  public form = {title: "Form title", fields: []};
 
-<<<<<<< HEAD
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formbuilder: FormBuilder) { 
-    this.form = this.formbuilder.group({
-      name : ['', Validators.required],
-      technologies : this.formbuilder.array([
-         this.initTechnologyFields()
-      ])
-    })
-  }
 
-   initTechnologyFields() : FormGroup{
-      return this.formbuilder.group({
-         name : ['', Validators.required]
-      });
-   }
-
-   addNewInputField() : void{
-      const control = <FormArray>this.form.controls.technologies;
-      control.push(this.initTechnologyFields());
-   }
-
-   removeInputField(i : number) : void{
-      const control = <FormArray>this.form.controls.technologies;
-      control.removeAt(i);
-   }
-
-   manage(val : any) : void{
-      console.log(val);
-   }
-   
-   ngOnInit() {
-
-   }
-
-=======
   constructor(private requests: VariousRequestsService, private popoverComponent: PopoverComponent,
     private toast: ToastComponent) { }
 
   ngOnInit() {
 
+  }
+
+  ionViewWillEnter(){
+    this.addField();
   }
 
   addField(){
@@ -109,5 +76,4 @@ export class PageFormsPage implements OnInit {
       this.toast.presentToast("Add at least one question!");
     }
   }
->>>>>>> da8dffa50c0a559d217fde4b69d961618ef189e6
 }

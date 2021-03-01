@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   public from: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    public loadingComponent: RequestLoadingComponent, 
+    public loadingComponent: RequestLoadingComponent,
     public alertController: AlertMessageComponent,
     private router:Router,
     public verifySessionService: VerifySessionService,
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
     this.loadingComponent.presentLoading("Loading...");
   }
 
-  showAlert(title, message){
+  showAlert(title: string, message: string){
     this.alertController.presentAlert(title, message);
   }
 

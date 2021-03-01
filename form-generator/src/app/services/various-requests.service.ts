@@ -17,9 +17,7 @@ export class VariousRequestsService {
   private token: any;
 
   constructor(private menuFunctions: MenuCreationFunctionsService, private store: Store,
-    private loading: RequestLoadingComponent, private alert: AlertMessageComponent) { 
-    private loading: RequestLoadingComponent, private alert: AlertMessageComponent,
-    private router: Router) {
+    private loading: RequestLoadingComponent, private alert: AlertMessageComponent, private router: Router) {
     this.tokenOb = this.store.select(state => state.token.token);
     this.tokenSub = this.tokenOb.subscribe((token) => {
       this.token = token;
@@ -48,8 +46,8 @@ export class VariousRequestsService {
       }
     })
     let json = response.json();
-    json.then((jsonContent) => { 
-      this.loading.loadingController.dismiss("", "", "loadingComponent") 
+    json.then((jsonContent) => {
+      this.loading.loadingController.dismiss("", "", "loadingComponent")
       this.alert.presentAlert(jsonContent.title, jsonContent.content);
     })
   }

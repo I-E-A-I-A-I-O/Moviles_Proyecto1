@@ -25,7 +25,7 @@ getQuery = async(client, query) => {
 getProm = (stats) => {
   let proms = [];
   let prom;
-  for (int i = 0; i < stats.length; i++){
+  for (let i = 0; i < stats.length; i++){
     prom = stats[i].sum / stats[i].count;
     proms.push({form_id: stats[i].form_id, form_name: stats[i].form_name, prom: prom});
   }
