@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { getFieldOptions } = require("../controllers/getFomData")
-const { getViewForm } = require('../controllers/viewForm')
+const { getFieldOptions, getForm } = require("../controllers/getFomData")
 const { saveForm } = require("../controllers/setFormData");
+const { saveAnswers } = require("../controllers/saveFormAnswers");
 
 router.get("/options", getFieldOptions);
 router.post("/", saveForm);
-router.get("/viewForm", getViewForm);
-
+router.get("/form/:id", getForm);
+router.post("/form/:id", saveAnswers);
 
 module.exports = router;

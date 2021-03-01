@@ -90,4 +90,36 @@ export class VariousRequestsService {
     if (json.title == "Success"){ this.router.navigate(["/admin-home"]); }
   }
 
+  getForm = async (formId: string) => {
+    let route = `http://localhost:8000/forms/form/${formId}`;
+    let response = await fetch(route, {
+      method: "GET",
+      credentials: "include",
+      headers:{
+        "authToken": this.token
+      }
+    });
+    let json = await response.json();
+    if (json.title == "Success"){ return json.content; }
+    else{
+      this.alert.presentAlert(json.title, json.content);
+      return null;
+    }
+  }
+
+  saveAnswers = async(formId: string, answers: any[]) => {
+    let route = `http://localhost:8000/forms/form/${formId}`;
+    let response = await fetch(route, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(answers),
+      headers:{
+        "Content-Type": "application/json",
+        "authToken": this.token
+      }
+    });
+    let json = await response.json();
+    this.alert.presentAlert(json.title, json.content);
+    return json.title == "Success";
+  }
 }

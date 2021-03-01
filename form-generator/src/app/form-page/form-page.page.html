@@ -1,9 +1,77 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>form-page</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="regular-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Form: {{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card [disabled]="!firstTime">
 
+    <ion-card-header>
+      <ion-card-title>
+        <ion-label>{{title}}</ion-label>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list *ngFor="let field of formData; let i = index">
+        <div [ngSwitch]="field.data_type">
+
+          <ion-card *ngSwitchCase="'string'">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-label>{{field.label}}</ion-label>
+                </ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-textarea (ionInput)="inputEvent($event, field.form_field_id)" type="text"></ion-textarea>
+              </ion-card-content>
+          </ion-card>
+
+          <ion-card *ngSwitchCase="'checkbox'">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-label>{{field.label}}</ion-label>
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-list *ngFor="let checkbox of field.options; let n = index">
+                <ion-item>
+                  <ion-label>{{checkbox.label}}</ion-label>
+                  <ion-checkbox (ionChange)="checkboxEvent($event, field.form_field_id, checkbox.label)" slot="end"></ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card *ngSwitchCase="'radio'">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-label>{{field.label}}</ion-label>
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-list>
+                <ion-radio-group (ionChange)="radioEvent($event, field.form_field_id)" [value]="field.options[0].label">
+                  <ion-item *ngFor="let radio of field.options; let n = index">
+                    <ion-label>{{radio.label}}</ion-label>
+                    <ion-radio slot="end" [value]="radio.label"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+        </div>
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+  <ion-button [disabled]="!firstTime" color="success" (click)="sendForm()" expand="full">Submit answers</ion-button>
 </ion-content>
