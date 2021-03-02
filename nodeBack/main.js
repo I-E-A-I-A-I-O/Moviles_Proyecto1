@@ -19,7 +19,7 @@ const { json } = require("express");
 const port = process.env.PORT || 8000;
 
 var corsOptions = {
-    origin: "*",
+    origin: "http://localhost",
     methods: "GET, PUT, DELETE, OPTIONS, HEAD",
     credentials: true,
     headers: "authToken, content-type",
