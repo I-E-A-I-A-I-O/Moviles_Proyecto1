@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams} from '@ionic/angular';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { VariousRequestsService } from '../services/various-requests.service';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { ToastComponent } from '../components/toast/toast.component';

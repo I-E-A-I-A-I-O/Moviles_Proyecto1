@@ -15,7 +15,7 @@ export class LogoutService {
   private tokenOb: Observable<Token>;
   private tokenSub: Subscription;
 
-  constructor(private router: Router, private store: Store) { 
+  constructor(private router: Router, private store: Store) {
     this.tokenOb = this.store.select(state => state.token.token);
     this.tokenSub = this.tokenOb.subscribe((token) => {
       this.token = token;
@@ -24,7 +24,7 @@ export class LogoutService {
 
   endSession(){
     let invToken: any = this.token;
-    fetch("http://localhost:8000/users/closeSession", {
+    fetch("https://moviles-proyecto1.herokuapp.com/users/closeSession", {
       method:"GET",
       credentials:"include",
       headers:{

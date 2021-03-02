@@ -11,7 +11,7 @@ export class VerifySessionService {
   constructor(private router: Router, private store: Store) { }
 
   verifySessionActive(token){
-    fetch("http://localhost:8000/users/connectedUser",{
+    fetch("https://moviles-proyecto1.herokuapp.com/users/connectedUser",{
       method: "GET",
       credentials: "include",
       headers:{
@@ -28,7 +28,7 @@ export class VerifySessionService {
   }
 
   getProfile = async (token) =>{
-    let response = await fetch("http://localhost:8000/users/user", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/users/user", {
       method:"GET",
       credentials:"include",
       headers:{
@@ -40,7 +40,7 @@ export class VerifySessionService {
   }
 
   getAvatar = async (token) => {
-    let response = await fetch("http://localhost:8000/users/user/avatar", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/users/user/avatar", {
       method:"GET",
       credentials:"include",
       headers:{

@@ -18,7 +18,7 @@ export class EditAccountService {
   private token;
 
   constructor(private loading: RequestLoadingComponent, private alert: AlertMessageComponent,
-    private store: Store, private requests: VerifySessionService, private logout: LogoutService) { 
+    private store: Store, private requests: VerifySessionService, private logout: LogoutService) {
       this.tokenOrb = this.store.select(state => state.token.token);
       this.tokenSub = this.tokenOrb.subscribe(token => {
         this.token = token;
@@ -27,7 +27,7 @@ export class EditAccountService {
 
   async sendChanges(type: string, formData: FormData){
     this.loading.presentLoading("Saving changes...");
-    let route = `http://localhost:8000/users/user/${type}`
+    let route = `https://moviles-proyecto1.herokuapp.com/users/user/${type}`
     let response = await fetch(route, {
       method: "POST",
       body: formData,

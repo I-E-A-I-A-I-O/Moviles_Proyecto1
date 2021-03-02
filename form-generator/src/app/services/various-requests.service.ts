@@ -25,7 +25,7 @@ export class VariousRequestsService {
   }
 
   requestMenuOptions = async () => {
-    let response = await fetch("http://localhost:8000/menus/options", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/menus/options", {
       method:"GET",
       credentials:"include"
     })
@@ -36,7 +36,7 @@ export class VariousRequestsService {
   saveMenu = async (menuData: object[]) => {
     this.loading.presentLoading("Saving changes...");
     let list = this.menuFunctions.treeToListAll(menuData);
-    let response = await fetch("http://localhost:8000/menus", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/menus", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(list),
@@ -54,7 +54,7 @@ export class VariousRequestsService {
 
   getMenu = async (loadingScreen = true) => {
     if (loadingScreen){ this.loading.presentLoading("Retrieving menu data..."); }
-    let response = await fetch("http://localhost:8000/menus", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/menus", {
       method:"GET",
       credentials:"include"
     })
@@ -66,7 +66,7 @@ export class VariousRequestsService {
   }
 
   getFieldOptions = async() => {
-    let response = await fetch("http://localhost:8000/forms/options", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/forms/options", {
       method: "GET",
       credentials: "include"
     })
@@ -75,7 +75,7 @@ export class VariousRequestsService {
 
   saveNewForm = async(formData: object) => {
     this.loading.presentLoading("Saving form...");
-    let response = await fetch("http://localhost:8000/forms", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/forms", {
       method: "POST",
       credentials:"include",
       body: JSON.stringify(formData),
@@ -91,7 +91,7 @@ export class VariousRequestsService {
   }
 
   getForm = async (formId: string) => {
-    let route = `http://localhost:8000/forms/form/${formId}`;
+    let route = `https://moviles-proyecto1.herokuapp.com/forms/form/${formId}`;
     let response = await fetch(route, {
       method: "GET",
       credentials: "include",
@@ -108,7 +108,7 @@ export class VariousRequestsService {
   }
 
   saveAnswers = async(formId: string, answers: any[]) => {
-    let route = `http://localhost:8000/forms/form/${formId}`;
+    let route = `https://moviles-proyecto1.herokuapp.com/forms/form/${formId}`;
     let response = await fetch(route, {
       method: "POST",
       credentials: "include",
@@ -125,7 +125,7 @@ export class VariousRequestsService {
 
   async getGlobalFormStats(){
     this.loading.presentLoading("Requesting stats...");
-    let response = await fetch("http://localhost:8000/stats/forms", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/stats/forms", {
       method: "GET",
       credentials: "include"
     })
@@ -136,7 +136,7 @@ export class VariousRequestsService {
 
   async getGlobalUserStats(){
     this.loading.presentLoading("Requesting stats...");
-    let response = await fetch("http://localhost:8000/stats/users", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/stats/users", {
       method: "GET",
       credentials: "include"
     });
@@ -150,7 +150,7 @@ export class VariousRequestsService {
   }
 
   async getUserStats(){
-    let response = await fetch("http://localhost:8000/stats/users/user", {
+    let response = await fetch("https://moviles-proyecto1.herokuapp.com/stats/users/user", {
       method: "GET",
       credentials: "include",
       headers:{

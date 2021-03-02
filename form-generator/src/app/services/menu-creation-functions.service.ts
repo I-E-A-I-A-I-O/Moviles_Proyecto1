@@ -8,9 +8,7 @@ export class MenuCreationFunctionsService {
   constructor() { }
 
   createDeleteInputs(tree){
-    //console.log(tree);
     let list = this.treeToListAll(tree);
-    //console.log(list);
     let inputs = []
     list.forEach(element => {
       inputs.push({
