@@ -48,7 +48,18 @@ export class VerifySessionService {
       }
     })
     let json = await response.json();
-    let avatar = json ? json.avatar : "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
+    let avatar: string;
+    if (json){
+      if (json.title != "Success"){
+        avatar = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
+      }
+      else{
+        avatar = json.avatar;
+      }
+    }
+    else{
+      avatar = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
+    }
     this.store.dispatch(new SetAvatar(avatar));
   }
 }
