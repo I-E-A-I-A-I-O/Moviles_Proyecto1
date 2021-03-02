@@ -16,7 +16,7 @@ const statsRoutes = require("./routers/statsRoutes");
 
 const { json } = require("express");
 
-const port = process.env.port || 8000;
+const port = process.env.PORT || 8000;
 
 var corsOptions = {
     origin: "http://localhost:8100",
