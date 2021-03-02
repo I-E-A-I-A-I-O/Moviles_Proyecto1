@@ -8,6 +8,7 @@ import { RegularPagePageRoutingModule } from './regular-page-routing.module';
 
 import { RegularPagePage } from './regular-page.page';
 import { ComponentsModule } from '../components/components.module';
+import { UserStatsDisplayComponent } from '../components/user-stats-display/user-stats-display.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { ComponentsModule } from '../components/components.module';
     RegularPagePageRoutingModule,
     ComponentsModule
   ],
-  declarations: [RegularPagePage]
+  declarations: [RegularPagePage],
+  providers: [
+    UserStatsDisplayComponent
+  ]
 })
 export class RegularPagePageModule {}

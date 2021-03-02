@@ -23,21 +23,31 @@ export class UserStatsDisplayComponent implements OnInit {
     let stats = await this.requests.getUserStats();
     let title = "Your stats";
     let categories = ['Forms visited', 'Answers submitted', 'Forms completed'];
-    let user_stats = [{ name: stats.views_answers[0].username, type: undefined, data: [] }];
-    if (stats.views_answers[0].visited_forms_count){
-      user_stats[0].data.push(parseInt(stats.views_answers[0].visited_forms_count));
+    let user_stats = [{ name: "You", type: undefined, data: [] }];
+    if (stats.views_answers.length > 0){
+      if (stats.views_answers[0].visited_forms_count){
+        user_stats[0].data.push(parseInt(stats.views_answers[0].visited_forms_count));
+      }
+      else{
+        user_stats[0].data.push(0);
+      }
+      if (stats.views_answers[0].total_answers_sum){
+        user_stats[0].data.push(parseInt(stats.views_answers[0].total_answers_sum));
+      }
+      else{
+        user_stats[0].data.push(0);
+      }
     }
     else{
-      user_stats[0].data.push(0);
+      user_stats[0].data.push(0, 0);
     }
-    if (stats.views_answers[0].total_answers_sum){
-      user_stats[0].data.push(parseInt(stats.views_answers[0].total_answers_sum));
-    }
-    else{
-      user_stats[0].data.push(0);
-    }
-    if(stats.completed_forms[0].completed_forms_count){
-      user_stats[0].data.push(parseInt(stats.completed_forms[0].completed_forms_count));
+    if (stats.completed_forms.length > 0){
+      if(stats.completed_forms[0].completed_forms_count){
+        user_stats[0].data.push(parseInt(stats.completed_forms[0].completed_forms_count));
+      }
+      else{
+        user_stats[0].data.push(0);
+      }
     }
     else{
       user_stats[0].data.push(0);

@@ -13,7 +13,10 @@ const editUsername = async(req, res) => {
     if (result.connected){
         let form = new multiparty.Form();
         form.parse(req, (error, fields) => {
-            if (error) res.status(500).json({title: "Error", content: error.message});
+            if (error){
+              console.log(error);
+              res.status(500).json({title: "Error", content: error.message});
+            }
             else{
                 let { username, password } = fields;
                 username = username[0];

@@ -13,8 +13,9 @@ const serveProfile = async (req, res) => {
         try{
             results = await client.query(text, params);
             res.status(200).json(results.rows[0]);
-        }catch{
-            res.status(500).json({title:"error", content:"Database query error"});
+        }catch(e){
+          console.log(e);
+          res.status(500).json({title:"error", content:"Database query error"});
         }
         finally{
             await client.release();
@@ -43,7 +44,8 @@ const serveAvatar = async (req, res) => {
                 let mime = "image/" + path.split(".")[1]
                 fs.readFile(path, {encoding: "base64"}, (readError, data) => {
                     if (readError){
-                        res.status(500).json({title:"error", content:readError.message});
+                      console.log(readError);
+                      res.status(500).json({title:"error", content:readError.message});
                     }
                     else{
                         const dataUrl = `data:${mime};base64,${data}`;
@@ -51,8 +53,9 @@ const serveAvatar = async (req, res) => {
                     }
                 })
             }
-        }catch{
-            res.status(500).json({title: "Error", content:"Database query error"});
+        }catch(e){
+          console.log(e);
+          res.status(500).json({title: "Error", content:"Database query error"});
         }
         finally{
             await client.release();
