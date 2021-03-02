@@ -18,12 +18,12 @@ export class RegisterComponent implements OnInit {
   public fileInput: any = "";
   public imgSrc = "https://i1.wp.com/immersivelrn.org/wp-content/uploads/no_avatar.jpg?fit=250%2C250&ssl=1";
 
-  constructor(private formBuilder: FormBuilder, public cameraService: CameraService, 
+  constructor(private formBuilder: FormBuilder, public cameraService: CameraService,
     private actionSheetController: ActionSheetController,
-    public loadingComponent: RequestLoadingComponent, 
+    public loadingComponent: RequestLoadingComponent,
     public alertController: AlertMessageComponent,
     private router: Router,
-    private verifySessionService: VerifySessionService) { 
+    private verifySessionService: VerifySessionService) {
     this.form = formBuilder.group({
       username: ['',[ Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
     else{
       formData.append("avatar", this.fileInput);
     }
-    fetch("http://localhost:8000/users", {
+    fetch("https://moviles-proyecto1.herokuapp.com/users", {
       method:"POST",
       body:formData,
       credentials:"include"
@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
     reader.onload = (event:any) => {
       this.imgSrc = event.target.result;
     }
-    reader.readAsDataURL(this.fileInput); 
+    reader.readAsDataURL(this.fileInput);
   }
 
   triggetFileInput(){
