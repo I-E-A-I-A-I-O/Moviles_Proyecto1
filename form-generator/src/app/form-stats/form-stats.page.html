@@ -1,10 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>form-stats</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Form stats</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div id="chartDiv" style="width:100%; height:400px;"></div>
-  <ion-button (click)="plusOne()">Add one</ion-button>
+
+  <ion-segment color="secondary" value="forms" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="forms">
+      <ion-label>Forms stats</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="users">
+      <ion-label>Users stats</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>

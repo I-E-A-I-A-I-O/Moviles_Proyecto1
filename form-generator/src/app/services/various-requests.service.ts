@@ -122,4 +122,30 @@ export class VariousRequestsService {
     this.alert.presentAlert(json.title, json.content);
     return json.title == "Success";
   }
+
+  async getGlobalFormStats(){
+    this.loading.presentLoading("Requesting stats...");
+    let response = await fetch("http://localhost:8000/stats/forms", {
+      method: "GET",
+      credentials: "include"
+    })
+    let json = await response.json();
+    this.loading.loadingController.dismiss("", "", "loadingComponent");
+    return json.content;
+  }
+
+  async getGlobalUserStats(){
+    this.loading.presentLoading("Requesting stats...");
+    let response = await fetch("http://localhost:8000/stats/users", {
+      method: "GET",
+      credentials: "include"
+    });
+    let json = await response.json();
+    this.loading.loadingController.dismiss("", "", "loadingComponent");
+    if (json.title == "Error"){
+      this.alert.presentAlert(json.title, json.content);
+      this.router.navigate(['/admin-home']);
+    }
+    else { return json.content };
+  }
 }
