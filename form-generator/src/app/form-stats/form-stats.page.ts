@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import * as HighCharts from 'highcharts'
-import { VariousRequestsService } from '../services/various-requests.service'
+import * as HighCharts from 'highcharts';
+import { VariousRequestsService } from '../services/various-requests.service';
 
 @Component({
   selector: 'app-form-stats',

@@ -27,11 +27,13 @@ import { NewAgeComponent } from './new-age/new-age.component';
 import { NewAvatarComponent } from './new-avatar/new-avatar.component';
 import { PopoverComponent } from './popover/popover.component';
 import { PopoverComponentComponent } from './popover-component/popover-component.component';
+import { UserStatsDisplayComponent } from './user-stats-display/user-stats-display.component';
+
 @NgModule({
   declarations: [
-    RegisterComponent, 
-    RequestLoadingComponent, 
-    LoginComponent, 
+    RegisterComponent,
+    RequestLoadingComponent,
+    LoginComponent,
     AdminMenuComponent,
     CardPageRedirectComponent,
     FormsComponent,
@@ -49,7 +51,8 @@ import { PopoverComponentComponent } from './popover-component/popover-component
     NewAgeComponent,
     NewAvatarComponent,
     PopoverComponent,
-    PopoverComponentComponent
+    PopoverComponentComponent,
+    UserStatsDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -79,11 +82,12 @@ import { PopoverComponentComponent } from './popover-component/popover-component
     NewAgeComponent,
     NewAvatarComponent,
     PopoverComponent,
-    PopoverComponentComponent
+    PopoverComponentComponent,
+    UserStatsDisplayComponent
   ],
   providers:[
-    RequestLoadingComponent, 
-    AlertMessageComponent, 
+    RequestLoadingComponent,
+    AlertMessageComponent,
     AdminMenuComponent,
     ToastComponent,
     MenuCreationFunctionsService,

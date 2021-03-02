@@ -148,4 +148,16 @@ export class VariousRequestsService {
     }
     else { return json.content };
   }
+
+  async getUserStats(){
+    let response = await fetch("http://localhost:8000/stats/users/user", {
+      method: "GET",
+      credentials: "include",
+      headers:{
+        "authToken": this.token
+      }
+    });
+    let json = await response.json();
+    return json.content;
+  }
 }
